@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Contact Backup</title>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="css/main.css">
+</head>
+<body style="margin:0;padding:0;background: #edf0f5">
+<div id="headerContainer" >
+<div id="headerFont" >
+<font style="font-size: 36px;font-weight: bold;">Contact Backup</font>
+</div>
+</div>
+<div id="signUpContainer" >
+<form name="loginForm" id="loginForm" action="Controller?action=login" method="post">
+<div style="padding: 10px 10px 0 10px;" >
+<input type="text" name="username"  id="username"  class="textBox" placeholder="Username">
+</div>
+<div style="padding: 10px;">
+<input type="password" name="password" id="password" class="textBox" 
+placeholder="Password"
+>
+<div id="invalidDiv" width="100%" style="display:none;" >
+Invalid user name or password.
+</div>
+<input type="submit">
+</div>
+</form>
+</div>
+<script>
+$(document).ready(function() {
+
+  $('#loginForm').submit(function(event) {
+	  console.log("hello");
+	  var username = $('#username').val();
+	  var password = $('#password').val();
+	  console.log("username:"+username+" password:"+password);
+
+    $.ajax({
+    	url: $("#loginForm").attr( "action") +"&username="+username+"&password="+password,
+       	type: "POST",
+		data: '{"username":"' + username + '"}',
+    	beforeSend: function(xhr) {
+    		xhr.setRequestHeader("Accept", "text/plain");
+    		xhr.setRequestHeader("Content-Type", "text/plain");
+			//xhr.setRequestParameter("username",username);
+			//xhr.setRequestParameter("password",password);
+    	},
+    	success: function(loginResponse) {
+    		console.log("loginResponse:"+loginResponse);
+			if(loginResponse=="valid"){
+			//return false;
+			console.log("user verfied true");
+			$(location).attr('href',"welcome.jsp");
+			}else{
+			//return false;
+			//$(location).attr('href',"invalid.html");
+			$('#username').val("");
+			$('#password').val("");
+			$('#invalidDiv').css('display',"block");
+			console.log("user verfied false");
+			}
+		 		
+    	},
+		error: function(loginresponse){
+		console.log("ajax error");
+		}
+    });
+
+    event.preventDefault();
+  });
+
+});
+
+
+
+function redirect ( url ){
+ window.location.href( url);
+}
+</script>
+</body>
+</html>
