@@ -202,7 +202,7 @@ public class MailSender {
 			MimeMessage msg = new MimeMessage(session);
 			String html="<h2>Hi "+email+"</h2>,<br><br>";
 			html+= "Your friend "+name.toUpperCase()+" has sent you invitation to try Contact Backup.<br><br>";
-			html+= "<a href='http://localhost:8080/Doctor/home.jsp?'>CONTACT BACKUP</a>";
+			html+= "<a href='http://localhost:8080/Doctor/home.html?'>CONTACT BACKUP</a>";
 			msg.setText(html, "UTF-8", "html");
 			msg.setSubject(emailSubjectInvitaion);
 			msg.setFrom(new InternetAddress(senderEmailID));

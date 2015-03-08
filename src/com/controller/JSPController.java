@@ -36,6 +36,12 @@ public class JSPController extends HttpServlet {
 		System.out.println("request URI:"+request.getRequestURI());
 		String pageName = getActionNameFromURL(uri);
 		if("home".equals(pageName)){
+			HttpSession session = request.getSession();
+			String login = (String) session.getAttribute("login");
+			if ("true".equals(login)) {
+				getServletContext().getRequestDispatcher("/welcome.html").forward(request, response);
+				return;
+			}
 			getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
 		}else if("doctor".equals(pageName)){
 			request.setAttribute("departments", Department.values());

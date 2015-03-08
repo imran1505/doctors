@@ -54,7 +54,7 @@ public class MainController extends HttpServlet {
 		
 		if( (session.isNew() || session.getAttribute("username")==null) && checkSession){
 			System.out.println("Checking User Session");
-			RequestDispatcher dispatcher=request.getRequestDispatcher("/home.jsp");
+			RequestDispatcher dispatcher=request.getRequestDispatcher("/home.html");
 			dispatcher.forward(request, response);
 		}
 		
@@ -69,7 +69,7 @@ public class MainController extends HttpServlet {
 				System.out.println(request.getServerPort());
 				System.out.println(request.getServerName());
 				System.out.println(request.getServletPath());
-				response.sendRedirect("home.jsp");
+				response.sendRedirect("home.html");
 			}
 //			if("plogin".equals(action)){
 //				doPatientLogin(request, response);

@@ -1,40 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%
-	String username = (String) session.getAttribute("username");
-	String login = (String) session.getAttribute("login");
-	String type = (String) session.getAttribute("type");
-	if (!"true".equals(login) || username == null || !"doctor".equals(type)) {
-		String redirectURL = "home.jsp";
-		response.sendRedirect(redirectURL);
-	}
-	String docpath = null;
-	String embedTag = "";
-	String docFileName = (String) session.getAttribute("docPath");
-	System.out.println("jsp:"+docFileName);
-	if(docFileName!=null && !docFileName.equals("")){
-		docpath = "/static/"+docFileName;
-		embedTag = "<embed  src='"+docpath+"' width='100%' height='700'>";
-		System.out.println("embedtag"+embedTag);
-	}
-	
-%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Doctor's Portal</title>
-<link rel="stylesheet" type="text/css" href="css/main.css">
-<link rel="stylesheet" type="text/css" href="css/tabs.css">
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="js/jquery.min.js"></script>
-<script src="js/main.js"></script>
-<script src="js/jqueryform.js"></script>
-</head>
+<%@ include file="header.jsp" %>
 <body>
 	<div id="headerContainer" width="100%"
 		style="background-color: #3b5998; height: 70px;">
