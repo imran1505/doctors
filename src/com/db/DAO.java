@@ -177,7 +177,7 @@ public class DAO {
 	
 	public List<Appointment> getPendingAppointmentFromDbForDoctor(String doctorid, boolean isConfirmed, Date date) {
 
-		List<Appointment> appointments = new ArrayList<>();
+		List<Appointment> appointments = new ArrayList<Appointment>();
 		try {
 			Connection con = dataSource.getConnection();
 			String dateCompare = "=";
@@ -211,7 +211,7 @@ public class DAO {
 	
 	public List<Appointment> getAppointmentFromDbForPatient(String patientId, boolean isConfirmed, Date date) {
 
-		List<Appointment> appointments = new ArrayList<>();
+		List<Appointment> appointments = new ArrayList<Appointment>();
 		try {
 			Connection con = dataSource.getConnection();
 			String dateCompare = "=";

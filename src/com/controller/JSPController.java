@@ -7,8 +7,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.omg.stub.java.rmi._Remote_Stub;
-
 import com.dto.Department;
 
 /**
@@ -33,16 +31,27 @@ public class JSPController extends HttpServlet {
 	}
 
 	private void handleAllRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String action = request.getParameter("action");
+		String uri= request.getRequestURL().toString();
+		System.out.println("uri:"+uri);
+		String action = getActionNameFromURL(uri);
 		if("welcome".equals(action)){
 			System.out.println("request URI:"+request.getRequestURI());
 			request.setAttribute("result", "12345");
 			getServletContext().getRequestDispatcher("/welcome.jsp").forward(request, response);
-		}else if("registerDoctor".equals(action)){
+		}else if("doctor".equals(action)){
 			System.out.println("request URI:"+request.getRequestURI());
 			request.setAttribute("departments", Department.values());
 			getServletContext().getRequestDispatcher("/register.jsp").forward(request, response);
 		}
+
+	}
+	
+	private String getActionNameFromURL(String url){
+		if(url==null || url.length()<1)
+			return null;
+		int index = url.lastIndexOf("/");
+		String action = url.substring(index+1, url.length());
+		return action;
 
 	}
 
