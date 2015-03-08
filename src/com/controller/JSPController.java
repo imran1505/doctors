@@ -65,6 +65,9 @@ public class JSPController extends HttpServlet {
 			}
 			getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
 			return;
+		}else{
+			getServletContext().getRequestDispatcher("/404.jsp").forward(request, response);
+			return;
 		}
 
 	}
