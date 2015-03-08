@@ -2,6 +2,7 @@ package com.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -202,9 +203,11 @@ public class MainController extends HttpServlet {
 		String city=request.getParameter("city");
 		String pincode=request.getParameter("pincode");
 		String state=request.getParameter("state");
+		String department=request.getParameter("department");
+		
 		
 		DAO dao=new DAO();
-		String resStr=dao.doSignUp(uname, pwd,fname,lname,address,city,pincode,state);
+		String resStr=dao.doSignUp(uname, pwd,fname,lname,address,city,pincode,state, department);
 		PrintWriter pw =response.getWriter();
 		HttpSession session=request.getSession();  
 	    session.setAttribute("username", uname);

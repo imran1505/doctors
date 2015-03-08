@@ -4,12 +4,17 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.dto.Appointment;
 import com.dto.Doctor;
 import com.dto.Patient;
 import com.utils.MailSender;
@@ -91,12 +96,12 @@ public class DAO {
 
 	public String doSignUp(String username, String password, String fname,
 			String lname, String address, String city, String pincode,
-			String state) {
+			String state, String department) {
 
 		String response = "Sign Up failed. Facing technical Difficulty.";
 		try {
 			Connection con = dataSource.getConnection();
-			String sql = "select count(*) from users where username=?";
+			String sql = "select count(*) from doctors where username=?";
 			PreparedStatement pst = con.prepareStatement(sql);
 
 			pst.setString(1, username);
@@ -112,7 +117,7 @@ public class DAO {
 				// System.out.println("uname:"+rs.getString(1));
 				// System.out.println("pwd:"+rs.getString(2));
 			}
-			sql = "insert into users values (?,?,?,?,?,?,?,?,?,?)";
+			sql = "insert into doctors values (?,?,?,?,?,?,?,?,?,?,?)";
 			pst = con.prepareStatement(sql);
 
 			pst.setString(1, username);
@@ -125,6 +130,7 @@ public class DAO {
 			pst.setString(8, state);
 			pst.setString(9, "");
 			pst.setString(10, "DOC_NOT_UPLOADED");
+			pst.setString(11, department);
 			int rownum = pst.executeUpdate();
 			System.out.println("rownum:" + rownum);
 			if (rownum == 1) {
@@ -151,7 +157,7 @@ public class DAO {
 		Doctor doctor = null;
 		try {
 			Connection con = dataSource.getConnection();
-			String sql = "select fname,lname,address,city,pincode,state,registrationdocname,status from doctors where username=? and password=?";
+			String sql = "select fname,lname,address,city,pincode,state,registrationdocname,status, department from doctors where username=? and password=?";
 			PreparedStatement pst = con.prepareStatement(sql);
 
 			pst.setString(1, username);
@@ -160,13 +166,100 @@ public class DAO {
 			ResultSet rs = pst.executeQuery();
 			System.out.println("st" + rs.getStatement());
 			while (rs.next()) {
-				doctor = new Doctor(username, rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+				doctor = new Doctor(username, rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
 			}
 			con.close();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
 		return doctor;
+	}
+	
+	public List<Appointment> getPendingAppointmentFromDbForDoctor(String doctorid, boolean isConfirmed, Date date) {
+
+		List<Appointment> appointments = new ArrayList<>();
+		try {
+			Connection con = dataSource.getConnection();
+			String dateCompare = "=";
+			if(date == null || date.equals("")){
+				dateCompare = ">=";
+			}
+			String sql = "select * from appointments where status=false and doctorid = ? appointmentdate"+dateCompare+" ? ";
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setBoolean(1, isConfirmed);
+			pst.setString(2, doctorid);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			if(date == null || date.equals("")){
+				pst.setString(3, ">=" + sdf.format(new Date()));
+			}else{
+				pst.setString(3,"="+ sdf.format(date));
+			}
+			
+
+			ResultSet rs = pst.executeQuery();
+			System.out.println("st" + rs.getStatement());
+			while (rs.next()) {
+				Appointment appointment = new Appointment( rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getBoolean(5), rs.getString(6));
+				appointments.add(appointment);
+			}
+			con.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		return appointments;
+	}
+	
+	public List<Appointment> getAppointmentFromDbForPatient(String patientId, boolean isConfirmed, Date date) {
+
+		List<Appointment> appointments = new ArrayList<>();
+		try {
+			Connection con = dataSource.getConnection();
+			String dateCompare = "=";
+			if(date == null || date.equals("")){
+				dateCompare = ">=";
+			}
+			String sql = "select * from appointments where status=? and patientid=? and appointmentdate"+dateCompare+" ? ";
+			PreparedStatement pst = con.prepareStatement(sql);
+			String todaysDate ="";
+			pst.setBoolean(1, isConfirmed);
+			pst.setString(2, patientId);
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			if(date == null || date.equals("")){
+				pst.setString(3, sdf.format(new Date()));
+			}else{
+				pst.setString(3, sdf.format(date));
+			}
+			
+
+			ResultSet rs = pst.executeQuery();
+			System.out.println("st" + rs.getStatement());
+			while (rs.next()) {
+				Appointment appointment = new Appointment( rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getBoolean(5), rs.getString(6));
+				appointments.add(appointment);
+			}
+			con.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		return appointments;
+	}
+	
+	
+	
+	public int approveAppointment(int appointmentId) {
+		int result = 0;
+		try {
+			Connection con = dataSource.getConnection();
+			String sql = "update appointments set status = true where id=?";
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setLong(1, appointmentId);
+
+			result = pst.executeUpdate();
+			con.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		return result;
 	}
 	
 	

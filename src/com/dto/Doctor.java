@@ -11,10 +11,11 @@ public class Doctor {
 	private String state;
 	private String registrationDocName;
 	private String status;
+	private Department department;
 	
 	public Doctor(String username, String fname, String lname, String address,
 			String city, String pincode, String state,
-			String registrationDocName, String status) {
+			String registrationDocName, String status, String departmentName) {
 		super();
 		this.username = username;
 		this.fname = fname;
@@ -25,6 +26,7 @@ public class Doctor {
 		this.state = state;
 		this.registrationDocName = registrationDocName;
 		this.status = status;
+		setDepartment(departmentName);
 	}
 
 	public String getUsername() {
@@ -98,6 +100,19 @@ public class Doctor {
 	public void setStatus(String status) {
 		this.status = status;
 	}
+	
+
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
+
+	public void setDepartment(String departmentName) {
+		this.department = Department.getDeparmentByName(departmentName);
+	}
 
 	@Override
 	public String toString() {
@@ -105,12 +120,7 @@ public class Doctor {
 				+ lname + ", address=" + address + ", city=" + city
 				+ ", pincode=" + pincode + ", state=" + state
 				+ ", registrationDocName=" + registrationDocName + ", status="
-				+ status + "]";
+				+ status + ", department=" + department + "]";
 	}
-	
-	
-	
-	
-
 
 }

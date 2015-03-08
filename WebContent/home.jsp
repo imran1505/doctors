@@ -68,7 +68,7 @@
 	</div>
 	</form>
 	</div>
-	<div id="signUpContainer" >
+	<!-- <div id="signUpContainer" >
 <div style="padding: 8px 10px;">
 <span style="color: #000;font-weight: bold;"><strong>New to Doctors Portal? </strong></span></div>
 <form name="signUpForm" id="signUpForm" action="Controller?action=signup" method="post">
@@ -90,7 +90,7 @@
 </div>
 </div>
 </form>
-</div>
+</div> -->
 	<script>
 $(document).ready(function() {
 

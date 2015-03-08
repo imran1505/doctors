@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 	String username=(String)session.getAttribute( "username" ); 
 	String login=(String)session.getAttribute( "login" ); 
@@ -53,6 +54,16 @@
 <div style="padding: 10px 10px 0 10px;" >
 <input type="text" name="state"  id="state"  class="textBoxBig" placeholder="State">
 </div>
+<div style="padding: 10px 10px 0 10px;" >
+Department : 
+	<select name="department" id="department">
+		<option value="">Select</option>
+		<c:forEach var="department" items="${departments}">
+			<option value="${department.getDepartmentName()}">${department.getDepartmentName()}</option>
+		</c:forEach>
+	</select>
+</div>
+
 <input class ="submitBtn" id="submitBtn2"  value="Sign Up">
 <div id="invalidDivSignUp" width="100%" style="display:none;color:red;">
 </div>
@@ -75,6 +86,7 @@ $(document).ready(function() {
 	  var city = $('#city').val();
 	  var pincode = $('#pincode').val();
 	  var state = $('#state').val();
+	  var department = $('#department').val();
 	  console.log("fname:"+fname);
 	  console.log("lname:"+lname);
 	  console.log("email:"+username);
@@ -83,7 +95,7 @@ $(document).ready(function() {
 	  if(fname==""){
 		  console.log("null");
 	  }
-	  if(fname == "" || lname== ""  || username=="" || reusername=="" || password=="" || address=="" || city=="" || pincode=="" || state==""){
+	  if(fname == "" || lname== ""  || username=="" || reusername=="" || password=="" || address=="" || city=="" || pincode=="" || state=="" || department==""){
 		  console.log("not all fields are populated");
 		  $('#invalidDivSignUp').css('display',"block");
 		  $('#invalidDivSignUp').text('All fields are mandatory');
@@ -126,6 +138,7 @@ $(document).ready(function() {
 				'city' : city,
 				'state' : state,
 				'pincode' : pincode,
+				'department':department
 		};
 
 	  $.post('Controller?action=signup', data, function(res) {
