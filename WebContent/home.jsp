@@ -1,36 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-<%
-	String username = (String) session.getAttribute("username");
-	String login = (String) session.getAttribute("login");
-	String type = (String) session.getAttribute("type");
-	if ("true".equals(login) && username != null) {
-		System.out.println("in home.jsp");
-		if("doctor".equals(type)){
-			String redirectURL = "welcome.jsp";
-			response.sendRedirect(redirectURL);
-		}
-		else if("patient".equals(type)){
-			String redirectURL = "welcomep.jsp";
-			response.sendRedirect(redirectURL);
-		}else{
-			String redirectURL = "error.jsp";
-			response.sendRedirect(redirectURL);
-		}
-		
-	}
-%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Doctors Portal</title>
-<link rel="stylesheet" type="text/css" href="css/main.css">
-<link rel="stylesheet" type="text/css" href="css/tabs.css">
-<script src="js/jquery.min.js"></script>
-<script src="js/main.js"></script>
-<script src="js/jqueryform.js"></script>
-</head>
+<%@ include file="header.jsp" %>
 <body>
 	<div id="headerContainer">
 		<div id="headerFont">
@@ -50,47 +20,21 @@
 				<input class="submitBtn" id="submitBtn" type="submit" value="Log In">	
 			</div>
 			<div style="padding: 10px;">
-				<!-- <span style="font-weight:bold">I am a &nbsp; &nbsp;</span><select name="type" id="type">
-					<option value="doctor">Doctor</option>
-					<option value="patient">Patient</option>
-				</select> -->
 				<input checked style="margin-left: 5px;"type="radio" name="type" value="doctor">Doctor
 				<input style="margin-left: 10px;" type="radio" name="type" value="patient">Patient
-			
-			<!-- <div>
-				<input class="submitBtn" id="submitBtn" type="submit" value="Log In">
-			</div> -->
-				<a style="float: right;text-align: left;padding-right: 50px;font-size: small;" href="recover.jsp">Forgot Password?</a>
+				<a style="float: right;text-align: left;padding-right: 50px;font-size: small;" href="recover.html">Forgot Password?</a>
 				
 				<div id="invalidDiv" width="100%" style="display: none; color: red;padding:10px;">
 				Invalid user name or password.</div>
 			</div>
+			<hr>
+			<div style="text-align: center;padding: 10px">
+			<span>New to Doctor's Portal. Signup for free</span>
+			<br>
+			<a href="register/doctor">Doctor</a>&nbsp; / &nbsp;<a href="register/patient">Patient</a>
+			</div>
+		</form>
 	</div>
-	</form>
-	</div>
-	<!-- <div id="signUpContainer" >
-<div style="padding: 8px 10px;">
-<span style="color: #000;font-weight: bold;"><strong>New to Doctors Portal? </strong></span></div>
-<form name="signUpForm" id="signUpForm" action="Controller?action=signup" method="post">
-<div style="padding: 185x 65px 0 10px;" >
-<div><strong>Or Sign Up! Its free.<br><br></strong></div>
-<input type="text" name="fname"  id="fname"  class="textBoxHalf" placeholder="First Name">
-<input type="text" name="lname"  id="lname"  class="textBoxHalf" placeholder="Last Name">
-</div>
-<div style="padding: 10px 65px 0 10px;" >
-<input type="text" name="email"  id="email"  class="textBoxBig" placeholder="Your Email Address">
-</div>
-<div style="padding: 10px 65px 0 10px;" >
-<input type="text" name="reemail"  id="reemail"  class="textBoxBig" placeholder="Re-Type Email Address">
-</div>
-<div style="padding: 10px 58px 0 10px;" >
-<input type="password" name="password" id="pwdSignUp" class="textBoxSmall" placeholder="Password">
-<input class ="submitBtn" id="submitBtn2"  type="submit" value="Sign Up">
-<div id="invalidDivSignUp" width="100%" style="display:none;color:red;" >
-</div>
-</div>
-</form>
-</div> -->
 	<script>
 $(document).ready(function() {
 
@@ -123,7 +67,7 @@ $(document).ready(function() {
 			if(loginResponse=="valid"){
 			//return false;
 			console.log("user verfied true");
-			$(location).attr('href',"welcome.jsp");
+			$(location).attr('href',"welcome.html");
 			}else{
 			//return false;
 			//$(location).attr('href',"invalid.html");
@@ -209,7 +153,7 @@ $(document).ready(function() {
 			if(loginResponse=="valid"){
 			//return false;
 			console.log("user signing up success true");
-			$(location).attr('href',"welcome.jsp");
+			$(location).attr('href',"welcome.html");
 			}else{
 			//return false;
 			//$(location).attr('href',"invalid.html");

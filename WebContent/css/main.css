@@ -461,6 +461,7 @@ input.submitBtn {
 	border-radius: 5px;
 	font-weight: bold;
 	outline: none;
+	margin-top: 10px;
 }
 
 /************************************import contacts *****************************************/

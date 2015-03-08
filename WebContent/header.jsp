@@ -5,9 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Doctors Portal</title>
-<link rel="stylesheet" type="text/css" href="../css/main.css">
-<link rel="stylesheet" type="text/css" href="../css/tabs.css">
-<script src="../js/jquery.min.js"></script>
-<script src="../js/main.js"></script>
-<script src="../js/jqueryform.js"></script>
+<style>
+<%@ include file="../css/main.css" %>
+<%@ include file="../css/tabs.css" %>
+</style>
+<script src="js/jquery.min.js"></script>
+<script src="js/main.js"></script>
+<script src="js/jqueryform.js"></script>
 </head>
