@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.dto.Department;
+import com.dto.Doctor;
 
 /**
  * Servlet implementation class JSPController

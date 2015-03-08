@@ -155,7 +155,7 @@ public class MainController extends HttpServlet {
 		    session.setAttribute("name", "Dr. " +doctor.getFname()+ " "+doctor.getLname());
 			session.setAttribute("login","true");
 			session.setAttribute("type","doctor");
-			session.setAttribute("docPath", doctor.getRegistrationDocName());
+			session.setAttribute("doctor", doctor);
 			pw.print("valid");
 		}
 		else{

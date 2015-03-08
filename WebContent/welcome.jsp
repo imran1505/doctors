@@ -15,16 +15,8 @@
 				<%=session.getAttribute("name")%>
 				<span> <a href="Controller?action=logout">Log Out</a> </span>
 				<span onclick="toggleDivDisplay()">
-					<img  src="images/navdd.png" id="navddImg" class="navddImg" class="navddImg" >
+					<img  src="images/navdd.png" id="navddImg" class="navddImg" class="navddImg" ></img>
 					<div id="navDropDown" name= "navDropDown" class="navDropDown" >
-						<!-- <a class="navAnchor" href="viewContacts.jsp"> View Contacts</a>
-						<hr>
-						<a class="navAnchor" href="addContacts.jsp"> Add Contacts</a>
-						<hr>
-						<a class="navAnchor" href="exportContacts.jsp"> Export Contacts</a>
-						<hr>
-						<a class="navAnchor" href="importContacts.jsp"> Import Contacts</a>
-						<hr> -->
 						<a  class="navAnchor" href="settings.jsp"> Settings</a>
 						<hr>
 						<a href="Controller?action=logout">Log Out</a> 
@@ -36,16 +28,22 @@
 	</div>
 	<section class="black-section">
 	<div class="container">
-			<a id="changeImages" href="#" onclick="clickFileSelect()">Upload your registration doc</a>
+			<a id="changeImages" href="#" onclick="clickFileSelect()">
+			<c:if test="${not empty doctor.registrationDocName and doctor.status ne 'verified'}">
+				Change your registration doc
+				<div id="pdfview">
+					<embed  src="/static/${doctor.registrationDocName}" width="100%" height="700">
+				</div>
+			</c:if>
+			<c:if test="${empty doctor.registrationDocName  or doctor.status eq 'verified'}">
+				Upload your registration doc
+			</c:if>
+			</a>
 			<form action="Controller?action=upload&type=image" id="importForm" method="post" enctype="multipart/form-data">
 				<input onchange="changeFileName()" type="file" class="submitBtn" id="filename" accept="application/pdf" style="display: none" name="file" size="50" />
 			</form>
 			<br>
 			<div id="review" style="display:none;color:white">Your document has been uploaded. We will review and confirm your registration.</div>
-			<br>
-			<div id="pdfview">
-			<c:out value="${result}"/>
-			</div>
 	</div>
 	</section>
 </body>
@@ -136,13 +134,13 @@
 
 
 	function showResponse(responseText, statusText, xhr, $form)  { 
-	    console.log("status:"+status);
+	    console.log("status:"+statusText);
 	    console.log("responseText:"+responseText);
 	    if(responseText!="false"){
 	    	$('#review').show();
-	    	$('#changeImages').html('Change your uploaded document');
+	    	/* $('#changeImages').text('Change your uploaded document'); */
 	    	var filename = "/static/"+responseText;
-	    	$('#pdfview').append(' <embed  src="'+filename+'" width="100%" height="700">');
+	    	$('#pdfview').html(' <embed  src="'+filename+'" width="100%" height="500">');
 	    }else{
 	    	alert("Document size too large.");
 	    }
