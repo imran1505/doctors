@@ -68,28 +68,29 @@
 	</div>
 	</form>
 	</div>
-	<!-- <div id="signUpContainer" >
+	<div id="signUpContainer" >
 <div style="padding: 8px 10px;">
-<span style="color: #000;font-weight: bold;"><strong>New to Doctors Portal? </strong>Sign Up! Its free.</span></div>
+<span style="color: #000;font-weight: bold;"><strong>New to Doctors Portal? </strong></span></div>
 <form name="signUpForm" id="signUpForm" action="Controller?action=signup" method="post">
-<div style="padding: 10px 10px 0 10px;" >
+<div style="padding: 185x 65px 0 10px;" >
+<div><strong>Or Sign Up! Its free.<br><br></strong></div>
 <input type="text" name="fname"  id="fname"  class="textBoxHalf" placeholder="First Name">
 <input type="text" name="lname"  id="lname"  class="textBoxHalf" placeholder="Last Name">
 </div>
-<div style="padding: 10px 10px 0 10px;" >
+<div style="padding: 10px 65px 0 10px;" >
 <input type="text" name="email"  id="email"  class="textBoxBig" placeholder="Your Email Address">
 </div>
-<div style="padding: 10px 10px 0 10px;" >
+<div style="padding: 10px 65px 0 10px;" >
 <input type="text" name="reemail"  id="reemail"  class="textBoxBig" placeholder="Re-Type Email Address">
 </div>
-<div style="padding: 10px;">
+<div style="padding: 10px 58px 0 10px;" >
 <input type="password" name="password" id="pwdSignUp" class="textBoxSmall" placeholder="Password">
 <input class ="submitBtn" id="submitBtn2"  type="submit" value="Sign Up">
 <div id="invalidDivSignUp" width="100%" style="display:none;color:red;" >
 </div>
 </div>
 </form>
-</div> -->
+</div>
 	<script>
 $(document).ready(function() {
 
