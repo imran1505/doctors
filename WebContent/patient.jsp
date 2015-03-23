@@ -122,7 +122,7 @@ $(document).ready(function() {
 		  console.log("loginResponse:"+res);
 			if (res=="valid") {
 				console.log("user signing up success true");
-				$(location).attr('href',"welcome.jsp");
+				$(location).attr('href',"welcome.html");
 			}else {
 				$('#password').val("");
 				$('#invalidDivSignUp').css('display',"block");

@@ -31,7 +31,7 @@
 			<div style="text-align: center;padding: 10px">
 			<span>New to Doctor's Portal. Signup for free</span>
 			<br>
-			<a href="register/doctor">Doctor</a>&nbsp; / &nbsp;<a href="register/patient">Patient</a>
+			<a href="doctor.html">Doctor</a>&nbsp; / &nbsp;<a href="patient.html">Patient</a>
 			</div>
 		</form>
 	</div>

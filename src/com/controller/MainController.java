@@ -227,24 +227,30 @@ public class MainController extends HttpServlet {
 	private void doPatientSignUp(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		
-		String uname=request.getParameter("username");
-		System.out.println("username recieved:"+uname);
+		String username=request.getParameter("username");
+		System.out.println("username recieved:"+username);
 		
-		String pwd=request.getParameter("password");
-		System.out.println("password recieved:"+pwd);
+		String password=request.getParameter("password");
+		System.out.println("password recieved:"+password);
 		
 		String fname=request.getParameter("fname");
 		String lname=request.getParameter("lname");
 		
 		DAO dao=new DAO();
-		String resStr=dao.doPatientSignUp(uname, pwd,fname,lname);
+		String resStr=dao.doPatientSignUp(username, password,fname,lname);
+		Patient patient = dao.getPatientFromDb(username,password);
 		PrintWriter pw =response.getWriter();
 		HttpSession session=request.getSession();  
-	    session.setAttribute("username", uname);
-	    session.setAttribute("name", fname+" "+lname);
 		if(resStr.equals("valid")){
 			session.setAttribute("login","true");
 			session.setAttribute("imagePath","default.jpg");
+		    session.setAttribute("username", username);
+			session.setAttribute("login","true");
+			System.out.println("For username:"+username+" and password:"+password+ " found patient:"+patient.toString());
+		    session.setAttribute("username", username);
+		    session.setAttribute("name",patient.getFname()+ " "+patient.getLname());
+			session.setAttribute("login","true");
+			session.setAttribute("type","patient");
 		}
 		pw.print(resStr);
 		
@@ -281,6 +287,8 @@ public class MainController extends HttpServlet {
 				pw.print("<br><br>");
 			}
 			
+		}else{
+			pw.print("<div class='headingDisease'>No Disease found for your symptoms.Try typing few more</div>");
 		}
 	}
 	
