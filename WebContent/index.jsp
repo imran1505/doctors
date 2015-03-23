@@ -13,13 +13,13 @@
 		<a style="color:white !important" href="home.html">Login as Doctor or Patient</a>
 		<br>
 		<br>
-		<a style="color:white !important" href="register/doctor.html">Sing Up for Doctors</a>
+		<a style="color:white !important" href="doctor.html">Sing Up for Doctors</a>
 		<br>
 		<br>
-		<a style="color:white !important" href="register/patient.html">Sing Up for Patients</a>
+		<a style="color:white !important" href="patient.html">Sing Up for Patients</a>
 		<br>
 		<br>
-		<a style="color:white !important" href="register/recover.html">Recover you Password</a>
+		<a style="color:white !important" href="recover.html">Recover you Password</a>
 		
 	</section>
 </body>
