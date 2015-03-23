@@ -190,11 +190,12 @@ public class MailSender {
 		props.put("mail.smtp.port", emailServerPort);
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.auth", "true");
-		// props.put("mail.smtp.debug", "true");
+	    props.put("mail.smtp.debug", "true");
 		props.put("mail.smtp.socketFactory.port", emailServerPort);
 		props.put("mail.smtp.socketFactory.class",
 				"javax.net.ssl.SSLSocketFactory");
 		props.put("mail.smtp.socketFactory.fallback", "false");
+		props.put("mail.smtp.starttls.enable", "true");
 
 		try {
 			Authenticator auth = new SMTPAuthenticator();
