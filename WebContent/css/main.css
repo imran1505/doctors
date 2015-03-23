@@ -576,8 +576,23 @@ a#changeImage {
 	font-weight: bold;
 	width: 60%;
 }
-.symptom-text{
+
+.symptom-text {
 	font-size: 15px;
-font-weight: 300;
-color: whitesmoke;
+	font-weight: 300;
+	color: whitesmoke;
 }
+
+.symptom-serach {
+	padding: 7px 8px;
+	border: 0 none;
+	cursor: pointer;
+	font-weight: bold;
+	outline: none;
+	line-height: 30px;
+	color: white;
+	width: 80px;
+	background: #3b5998;
+}
+
+/***** patient home ****/

@@ -54,10 +54,15 @@
 		</div>
 	</div>
 	<section class="black-section">
-	<div style="text-align:center" class="ui-widget">
-      <label class="symptom-text" for="tags">Feeling sick? Type your symptoms here</label><br>
-      <input class="symptom-searchbox" id="tags" size="2">
-    </div>
+	<div style="text-align: center" class="ui-widget">
+		<label class="symptom-text" for="tags">Feeling sick? Type your symptoms here</label><br> 
+		<input class="symptom-searchbox" id="tags" size="2"> 
+		<input class="symptom-serach" id="submit-btn" type="button" value="Search">
+	</div>
+	</section>
+	
+	<section class="white-section">
+	<div class="result" style="text-align: center" class="ui-widget"></div>
 	</section>
 </body>
 <script>
@@ -67,24 +72,16 @@ $(function() {
       "Nausea",
       "Vomitting",
       "Bleeding",
-      "C",
-      "C++",
-      "Clojure",
-      "COBOL",
-      "ColdFusion",
-      "Erlang",
-      "Fortran",
-      "Groovy",
-      "Haskell",
-      "Java",
-      "JavaScript",
-      "Lisp",
-      "Perl",
-      "PHP",
-      "Python",
-      "Ruby",
-      "Scala",
-      "Scheme"
+      "Headache",
+      "Cough",
+      "Stomach Ache",
+      "Swelling",
+      "Red Eyes",
+      "Rashes",
+      "Chest Pain",
+      "Throat Pain",
+      "Irritation",
+      "Shivering",
     ];
     function split( val ) {
       return val.split( /,\s*/ );
@@ -125,5 +122,21 @@ $(function() {
         }
       });
   });
+  
+
+	$('#submit-btn').click(function(event) {
+		event.preventDefault();
+		var symptoms = $('#tags').val();
+		if (symptoms == null || symptoms == "") {
+			return;
+		}
+		var data = {
+			'symptoms' : symptoms,
+		};
+		$.post('Controller?action=symptoms', data, function(res) {
+			console.log("symptoms response:" + res);
+			$('.result').html(res);
+		});
+	});
 </script>
 </html>

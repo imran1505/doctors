@@ -2,7 +2,7 @@ package com.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import com.db.DAO;
 import com.dto.Doctor;
 import com.dto.Patient;
+import com.utils.Disease;
 import com.utils.DocumentUploader;
 
 
@@ -92,6 +93,9 @@ public class MainController extends HttpServlet {
 			}
 			if("upload".equalsIgnoreCase(action)){
 				upload(request,response);
+			}
+			if("symptoms".equalsIgnoreCase(action)){
+				findDisease(request,response);
 			}
 		}else{
 			
@@ -254,6 +258,30 @@ public class MainController extends HttpServlet {
 		session.setAttribute("docPath",resStr);
 		PrintWriter pw=response.getWriter();
 		pw.print(resStr);
+	}
+	
+	
+	private void findDisease(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String symptomsStr=request.getParameter("symptoms");
+		String[] symptomsArr = symptomsStr.split(",");
+		ArrayList<String> symptomList = new ArrayList<>();
+		for(String symptom: symptomsArr){
+			System.out.println(symptom.trim());
+			symptomList.add(symptom.trim().toLowerCase());
+		}
+		ArrayList<String> diseaseList = Disease.findDisease(symptomList);
+		System.out.println("Disease found:"+diseaseList);
+		PrintWriter pw =response.getWriter();
+		if(diseaseList!=null && !diseaseList.isEmpty()){
+			pw.print("<div class='headingDisease'>You may have following disease</div>");
+			for(String disease:diseaseList){
+				pw.print("<h3>"+disease+"</h3>");
+				pw.print(Disease.getFormattedDiseaseSymptoms(disease));
+				pw.print("<br><br>");
+			}
+			
+		}
 	}
 	
 //	private void xyz(){
