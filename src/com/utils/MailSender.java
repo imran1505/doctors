@@ -13,12 +13,12 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class MailSender {
-	final static String senderEmailID = "anyasdhjopo@gmail.com";
-	final static String senderPassword = "passsswoerd";
+	final static String senderEmailID = "md.ibrahim1508@gmail.com";
+	final static String senderPassword = "purnea243583";
 	final static String emailSMTPserver = "smtp.gmail.com";
 	final static String emailServerPort = "465";
 	final static String emailBody ="email Body";
-	final static String emailSubject ="Contact Backup password reovery";
+	final static String emailSubject ="User Verification ";
 	final static String emailSubjectInvitaion="Invite to join Contact Backup";
 	
 
