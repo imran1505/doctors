@@ -15,6 +15,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.dto.Appointment;
+import com.dto.Department;
 import com.dto.Doctor;
 import com.dto.Patient;
 import com.utils.MailSender;
@@ -175,6 +176,28 @@ public class DAO {
 		return doctor;
 	}
 	
+	public List<Doctor> getDoctorBasedOnDepartment(Department department) {
+
+		List<Doctor> doctorsList = new ArrayList<>();
+		try {
+			Connection con = dataSource.getConnection();
+			String sql = "select username,fname,lname,address,city,pincode,state,registrationdocname,status, department from doctors where department=?";
+			PreparedStatement pst = con.prepareStatement(sql);
+
+			pst.setString(1, department.getDepartmentName());
+			ResultSet rs = pst.executeQuery();
+			System.out.println("st" + rs.getStatement());
+			while (rs.next()) {
+				Doctor doctor = new Doctor( rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9), rs.getString(10));
+				doctorsList.add(doctor);
+			}
+			con.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		return doctorsList;
+	}
+	
 	public List<Appointment> getPendingAppointmentFromDbForDoctor(String doctorid, boolean isConfirmed, Date date) {
 
 		List<Appointment> appointments = new ArrayList<Appointment>();
@@ -184,7 +207,7 @@ public class DAO {
 			if(date == null || date.equals("")){
 				dateCompare = ">=";
 			}
-			String sql = "select * from appointments where status=false and doctorid = ? appointmentdate"+dateCompare+" ? ";
+			String sql = "select * from appointments where status=? and doctorid = ? appointmentdate"+dateCompare+" ? ";
 			PreparedStatement pst = con.prepareStatement(sql);
 			pst.setBoolean(1, isConfirmed);
 			pst.setString(2, doctorid);
