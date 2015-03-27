@@ -2,6 +2,7 @@ package com.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -88,7 +89,7 @@ public class MainController extends HttpServlet {
 			if("patientsignup".equals(action)){
 				doPatientSignUp(request, response);
 			}
-			if("chpwd".equals(action)){
+			if("changePassword".equals(action)){
 				changePwd(request,response);
 			}
 			if("upload".equalsIgnoreCase(action)){
@@ -96,6 +97,12 @@ public class MainController extends HttpServlet {
 			}
 			if("symptoms".equalsIgnoreCase(action)){
 				findDisease(request,response);
+			}
+			if("recover".equalsIgnoreCase(action)){
+				recoverPassword(request,response);
+			}
+			if("newpwd".equalsIgnoreCase(action)){
+				newPassword(request,response);
 			}
 		}else{
 			
@@ -106,16 +113,18 @@ public class MainController extends HttpServlet {
 	private void changePwd(HttpServletRequest request,
 			HttpServletResponse response) throws IOException {
 		
-		String oldpwd= request.getParameter("pwd");
-		String newPwd= request.getParameter("newpwd");
+		String oldpwd= request.getParameter("oldpwd");
+		String newPwd= request.getParameter("pwd");
 		String username = (String)request.getSession().getAttribute("username");
+		String type = (String)request.getSession().getAttribute("type");
+		System.out.println("username:"+username+" type:"+type);
 		DAO dao= new DAO();
 		PrintWriter pw= response.getWriter();
 		String isChanged="Facing Technical difficulty. Please try again.";
 		if(username==null || oldpwd ==null || newPwd==null)
 		{
 		}else{
-			isChanged=dao.changePwd(username,oldpwd,newPwd);
+			isChanged=dao.changePwd(username,oldpwd,newPwd,type);
 		}
 		System.out.println("retuning:"+isChanged);
 		if(isChanged.equalsIgnoreCase("true")){
@@ -290,6 +299,49 @@ public class MainController extends HttpServlet {
 		}else{
 			pw.print("<div class='headingDisease'>No Disease found for your symptoms.Try typing few more</div>");
 		}
+	}
+	
+	
+	private void recoverPassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		String type=request.getParameter("type");
+		String email=request.getParameter("email");
+		DAO dao = new DAO();
+		String responseStr = "Facing technical difficulty. Please try again.";
+		if("doctor".equalsIgnoreCase(type)){
+			Doctor doctor = dao.getDoctorFromDb(email);
+			if(doctor==null){
+				responseStr = "Please check the username you entered.";
+			}else{
+				//TODO check mail sent or not
+				responseStr = dao.recover(email, type);
+			}
+		}else if("patient".equalsIgnoreCase(type)){
+			Patient patient = dao.getPatientFromDb(email);
+			if(patient==null){
+				responseStr = "Please check the username you entered.";
+			}else{
+				responseStr = dao.recover(email, type);
+			}
+		}
+		PrintWriter pw =response.getWriter();
+		pw.print(responseStr);
+	}
+	
+	
+	
+	
+	private void newPassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String type=request.getParameter("type");
+		String code=request.getParameter("code");
+		String uid=request.getParameter("uid");
+		String newPassword=request.getParameter("pwd");
+		BigInteger number = new BigInteger(uid);
+		String username = new String(number.toByteArray());
+		DAO dao = new DAO();
+		boolean isNewPasswordInserted = dao.verifyRecovery(username, code, newPassword,type);
+		PrintWriter pw =response.getWriter();
+		pw.print(isNewPasswordInserted);
 	}
 	
 //	private void xyz(){

@@ -176,6 +176,28 @@ public class DAO {
 		return doctor;
 	}
 	
+	public Doctor getDoctorFromDb(String username) {
+
+		Doctor doctor = null;
+		try {
+			Connection con = dataSource.getConnection();
+			String sql = "select fname,lname,address,city,pincode,state,registrationdocname,status, department from doctors where username=?";
+			PreparedStatement pst = con.prepareStatement(sql);
+
+			pst.setString(1, username);
+
+			ResultSet rs = pst.executeQuery();
+			System.out.println("st" + rs.getStatement());
+			while (rs.next()) {
+				doctor = new Doctor(username, rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8), rs.getString(9));
+			}
+			con.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		return doctor;
+	}
+	
 	public List<Doctor> getDoctorBasedOnDepartment(Department department) {
 
 		List<Doctor> doctorsList = new ArrayList<>();
@@ -310,6 +332,100 @@ public class DAO {
 	}
 	
 	
+	public Patient getPatientFromDb(String username) {
+
+		Patient patient = null;
+		try {
+			Connection con = dataSource.getConnection();
+			String sql = "select fname,lname,verificationcode from patients where username=?";
+			PreparedStatement pst = con.prepareStatement(sql);
+
+			pst.setString(1, username);
+
+			ResultSet rs = pst.executeQuery();
+			System.out.println("st" + rs.getStatement());
+			while (rs.next()) {
+				patient = new Patient(username, rs.getString(1), rs.getString(2), rs.getString(3));
+			}
+			con.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		return patient;
+	}
+	
+	
+	public Patient getPatientFromDbByVerificationCode(String verificationCode) {
+
+		Patient patient = null;
+		try {
+			Connection con = dataSource.getConnection();
+			String sql = "select username,fname,lname,verificationcode from patients where verificationcode=?";
+			PreparedStatement pst = con.prepareStatement(sql);
+
+			pst.setString(1, verificationCode);
+
+			ResultSet rs = pst.executeQuery();
+			System.out.println("st" + rs.getStatement());
+			while (rs.next()) {
+				patient = new Patient(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
+			}
+			con.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		return patient;
+	}
+	
+	
+	public boolean verifyPatient(String username) {
+
+		boolean isInserted = false;
+
+		try {
+			Connection con = dataSource.getConnection();
+			String sql = "update patients set verificationcode=?  where username=?";
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setString(1, "verified");
+			pst.setString(2, username);
+			int rowcount = pst.executeUpdate();
+			if (rowcount == 1) {
+				isInserted = true;
+				System.out.println("Patient verified successfully");
+			}
+			con.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		System.out.println("returing from verifyPatient:" + isInserted);
+		return isInserted;
+	}
+	
+	
+	public boolean insertRecovery(String username) {
+
+		boolean isInserted = false;
+
+		try {
+			Connection con = dataSource.getConnection();
+			String sql = "update recovery set verificationcode=?  where username=?";
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setString(1, "verified");
+			pst.setString(2, username);
+			int rowcount = pst.executeUpdate();
+			if (rowcount == 1) {
+				isInserted = true;
+				System.out.println("Patient verified successfully");
+			}
+			con.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		System.out.println("returing from verifyPatient:" + isInserted);
+		return isInserted;
+	}
+	
+	
 	public String getPatientName(String uname, String pwd) {
 
 		String name = null;
@@ -335,13 +451,17 @@ public class DAO {
 		return name;
 	}
 
-	public String recover(String email) {
+	public String recover(String email, String type) {
 
 		String response = "Facing technical difficulty.Please try later.";
 		String randomCode = null;
 		try {
 			Connection con = dataSource.getConnection();
-			String sql = "select count(*) from users where username=?";
+			String sql = "select count(*) from doctors where username=?";
+			if("patient".equalsIgnoreCase(type)){
+				sql = "select count(*) from patients where username=?";
+			}
+			
 			PreparedStatement pst = con.prepareStatement(sql);
 
 			pst.setString(1, email);
@@ -350,10 +470,8 @@ public class DAO {
 			while (rs.next()) {
 				System.out.println(rs.getInt(1));
 				if (rs.getInt(1) == 1) {
-					System.out
-							.println("user found. sending email to his registered email address:"
-									+ email);
-					randomCode = MailSender.sendRecoveryMail(email);
+					System.out.println("user found. sending email to his registered email address:" + email);
+					randomCode = MailSender.sendRecoveryMail(email,type);
 					System.out.println("random code genearted:" + randomCode);
 					if (randomCode == null) {
 						response = "This email is not registered with us. Please enter registered email address.";
@@ -367,7 +485,7 @@ public class DAO {
 					return response;
 				}
 			}
-			sql = "insert into pwdrecovery values (UUID(),?,?,?)";
+			sql = "insert into recovery values (UUID(),?,?,?)";
 			pst = con.prepareStatement(sql);
 
 			pst.setString(1, email);
@@ -376,7 +494,7 @@ public class DAO {
 			int rownum = pst.executeUpdate();
 			System.out.println("rownum:" + rownum);
 			if (rownum == 1) {
-				response = "valid";
+				response = "sent";
 			}
 			con.close();
 		} catch (SQLException e1) {
@@ -387,12 +505,12 @@ public class DAO {
 
 	}
 
-	public boolean verify(String username, String code, String newPassword) {
+	public boolean verifyRecovery(String username, String code, String newPassword, String type) {
 
 		boolean response = false;
 		try {
 			Connection con = dataSource.getConnection();
-			String sql = "select count(*) from PWDRECOVERY where username=? and verificationcode=? and VERIFICATIONSTATUS='0'";
+			String sql = "select count(*) from recovery where username=? and code=? and status='0'";
 			PreparedStatement pst = con.prepareStatement(sql);
 
 			pst.setString(1, username);
@@ -404,14 +522,17 @@ public class DAO {
 				if (rs.getInt(1) != 1) {
 					return response;
 				} else {
-					sql = "update PWDRECOVERY set VERIFICATIONSTATUS='1' where username=? and verificationcode=?";
+					sql = "update recovery set status='1' where username=? and code=?";
 					pst = con.prepareStatement(sql);
 					pst.setString(1, username);
 					pst.setString(2, code);
 					System.out.println(" SQL:" + sql);
 					int rowcount = pst.executeUpdate();
 					if (rowcount == 1) {
-						sql = "update USERS set PASSWORD=? where username=?";
+						sql = "update patients set password=? where username=?";
+						if(type.equals("doctor")){
+							sql = "update doctors set password=? where username=?";
+						}
 						pst = con.prepareStatement(sql);
 						pst.setString(1, newPassword);
 						pst.setString(2, username);
@@ -434,12 +555,15 @@ public class DAO {
 		return response;
 	}
 
-	public String changePwd(String username, String oldpwd, String newPwd) {
+	public String changePwd(String username, String oldpwd, String newPwd, String type) {
 		String isPassowrdChanged = "Facing technical Difficulty.";
 
 		try {
 			Connection con = dataSource.getConnection();
-			String sql = "select count(*) from USERS where username=? and password=?";
+			String sql = "select count(*) from patients where username=? and password=?";
+			if(type.equals("doctor")){
+				 sql = "select count(*) from doctors where username=? and password=?";
+			}
 			PreparedStatement pst = con.prepareStatement(sql);
 
 			pst.setString(1, username);
@@ -451,7 +575,10 @@ public class DAO {
 					isPassowrdChanged = "Your password do not match with what we have in our database.";
 					return isPassowrdChanged;
 				} else {
-					sql = "update USERS set PASSWORD=? where username=?";
+					sql = "update patients set PASSWORD=? where username=?";
+					if(type.equals("doctor")){
+						sql = "update doctors set PASSWORD=? where username=?";
+					}
 					pst = con.prepareStatement(sql);
 					pst.setString(1, newPwd);
 					pst.setString(2, username);
@@ -528,7 +655,7 @@ public class DAO {
 			int rownum = pst.executeUpdate();
 			System.out.println("rownum:" + rownum);
 			if (rownum == 1) {
-				response = "valid";
+				response = "registered";
 			}
 			con.close();
 		} catch (SQLException e1) {

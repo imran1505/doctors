@@ -17,7 +17,7 @@
 				<span onclick="toggleDivDisplay()">
 					<img  src="images/navdd.png" id="navddImg" class="navddImg" class="navddImg" ></img>
 					<div id="navDropDown" name= "navDropDown" class="navDropDown" >
-						<a  class="navAnchor" href="settings.jsp"> Settings</a>
+						<a class="navAnchor" href="changePwd.html"> Change Password</a>
 						<hr>
 						<a href="Controller?action=logout">Log Out</a> 
 						<hr>

@@ -31,19 +31,8 @@
 </div>
 <div style="padding: 10px;">
 <input type="password" name="password" id="pwdSignUp" class="textBoxBig" placeholder="Password">
-<!-- <div style="padding: 10px 10px 0 10px;" >
-<input type="text" name="address"  id="address"  class="textBoxBig" placeholder="Address">
-</div>
-<div style="padding: 10px 10px 0 10px;" >
-<input type="text" name="city"  id="city"  class="textBoxBig" placeholder="City">
-</div>
-<div style="padding: 10px 10px 0 10px;" >
-<input type="text" name="pincode"  id="pincode"  class="textBoxBig" placeholder="Pincode">
-</div>
-<div style="padding: 10px 10px 0 10px;" >
-<input type="text" name="state"  id="state"  class="textBoxBig" placeholder="State">
-</div> -->
-<input class ="submitBtn" id="submitBtn2"  value="Sign Up">
+<br>
+<input class ="submitBtn" id="submitBtn2" type="button" value="Sign Up">
 <div id="invalidDivSignUp" width="100%" style="display:none;color:red;">
 </div>
 </div>
@@ -120,8 +109,9 @@ $(document).ready(function() {
 
 	  $.post('Controller?action=patientsignup', data, function(res) {
 		  console.log("loginResponse:"+res);
-			if (res=="valid") {
+			if (res=="registered") {
 				console.log("user signing up success true");
+				window.alert("A verification mail has been sent to your registred email address. Please complete the verification to get started.")
 				$(location).attr('href',"welcome.html");
 			}else {
 				$('#password').val("");

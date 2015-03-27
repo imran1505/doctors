@@ -1,55 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<%
-	String username=(String)session.getAttribute( "username" ); 
-	String login=(String)session.getAttribute( "login" ); 
-	if("true".equals(login) && username!=null){
-	System.out.println("in home.jsp");
-    String redirectURL = "welcome.jsp";
-    response.sendRedirect(redirectURL);}
-%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Recover</title>
-<link rel="stylesheet" type="text/css" href="css/main.css">
-<link rel="stylesheet" type="text/css" href="css/tabs.css">
-<script src="js/jquery.min.js"></script>
-<script src="js/main.js"></script>
-<script src="js/jqueryform.js"></script>
-</head>
-<body >
-<div id="headerContainer" >
-<div id="headerFont" >
-<a href="home.jsp">
-<div style="font-size: 36px; font-weight: bold; color: #fff; display: inline">Contact Backup</div>
-</a>
-</div>
-<div id="signInContainer" >
-<form name="signUpForm" id="signUpForm" action="Controller?action=recover" method="post">
-<div style="padding: 10px 10px 0 10px;" >
-<span>Please enter your email address.</span>
-<input type="text" name="email"  id="email"  class="textBoxBig" placeholder="Registered email address">
-<input class ="submitBtn" id="submitBtn"  type="submit" value="Recover">
-</div>
-<div style="padding: 10px;">
-<div id="invalidDivSignUp" width="100%" style="display:none;color:red;" >
-</div>
-</div>
-<div id='overlayDiv' class='overlayDiv'"></div>
-	<div id='overlayDiv2' class='overlayDiv2' >
-		<div style='margin:50px'>Recovering your password. Please wait .....</div>
+	pageEncoding="ISO-8859-1"%>
+<%@ include file="header.jsp"%>
+<body>
+	<div id="headerContainer">
+		<div id="headerFont">
+			<div
+				style="font-size: 36px; font-weight: bold; color: #fff; display: inline">Doctors
+				Portal</div>
+		</div>
 	</div>
-</div>
+	<div id="signInContainer" style="text-align:center;">
+		<form name="recoverForm" id="recoverForm" action="Controller?action=recover" method="post">
+			<div style="padding: 10px 10px 0 10px;">
+				<div style="padding: 10px;">
+					<input checked style="margin-left: 5px;" type="radio" name="type"value="doctor">Doctor 
+					<input style="margin-left: 10px;" type="radio" name="type" value="patient">Patient
+				</div>
+				<span>Email address</span> <input type="text" name="email" id="email" class="textBoxBig" placeholder="Registered email address"> <br>
+				<input class="submitBtn" id="submitBtn" type="submit" value="Recover">
+			</div>
+			<div style="padding: 10px;">
+				<div id="invalidDivSignUp" width="100%" style="display: none; color: red;"></div>
+			</div>
+			<div id='overlayDiv' class='overlayDiv'"></div>
+			<div id='overlayDiv2' class='overlayDiv2'>
+				<div style='margin: 50px'>Recovering your password. Please wait .....</div>
+			</div>
+		</form>
+	</div>
 </body>
 <script>
 $(document).ready(function() {
   
-  $('#signUpForm').submit(function(event) {
+  $('#recoverForm').submit(function(event) {
 	  console.log("signing up form");
 	  var email = $('#email').val();
-	  console.log("email:"+email);
+	  var type = $('input[name=type]:checked', '#recoverForm').val();
+	  console.log("email:"+email +" type:"+type);
 	  if(email==""){
 		  console.log("cannot be null");
 		  $('#invalidDivSignUp').css('display',"block");
@@ -71,7 +58,7 @@ $(document).ready(function() {
 
 	  
     $.ajax({
-    	url: $("#signUpForm").attr( "action") +"&email="+email,
+    	url: $("#recoverForm").attr( "action") +"&email="+email+"&type="+type,
        	type: "POST",
     	beforeSend: function(xhr) {
     		xhr.setRequestHeader("Accept", "text/plain");
@@ -81,21 +68,21 @@ $(document).ready(function() {
     		$('#overlayDiv').show();
     		$('#overlayDiv2').show();
     	},
-    	success: function(loginResponse) {
+    	success: function(recoveryResponse) {
     		cancelEdit();
-    		console.log("loginResponse:"+loginResponse);
-			if(loginResponse=="valid"){
+    		console.log("revovery response:"+recoveryResponse);
+			if(recoveryResponse=="sent"){
 				console.log("registered user hence recovery email sent successfully.");
 				alert("A recovery link has been sent to your registered email address. Redirecting to home page.");
-				redirect("home.jsp");
+				redirect("home.html");
 			}else{
 				$('#invalidDivSignUp').css('display',"block");
-				$('#invalidDivSignUp').text(loginResponse);
-				console.log("user sing up failed");
+				$('#invalidDivSignUp').text(recoveryResponse);
+				console.log("recovery failed");
 			}
 		 		
     	},
-		error: function(loginresponse){
+		error: function(recoveryResponse){
 			cancelEdit();
 			$('#invalidDivSignUp').css('display',"block");
 			$('#invalidDivSignUp').text("Facing technical difficulty.");

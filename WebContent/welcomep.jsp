@@ -10,24 +10,7 @@
 		response.sendRedirect(redirectURL);
 	}
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Doctor's Portal</title>
-<link rel="stylesheet" type="text/css" href="css/main.css">
-<link rel="stylesheet" type="text/css" href="css/tabs.css">
-<link rel="stylesheet" type="text/css" href="css/jquery-ui.css">
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<script
-	src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script src="js/jquery.min.js"></script>
-<script src="js/main.js"></script>
-<script src="js/jqueryform.js"></script>
-<script src="js/jquery-ui.js"></script>
-</head>
+<%@ include file="header.jsp" %>
 <body>
 	<div id="headerContainer" width="100%"
 		style="background-color: #3b5998; height: 70px;">
@@ -44,7 +27,7 @@
 					src="images/navdd.png" id="navddImg" class="navddImg"
 					class="navddImg">
 					<div id="navDropDown" name="navDropDown" class="navDropDown">
-						<a class="navAnchor" href="settings.jsp"> Settings</a>
+						<a class="navAnchor" href="changePwd.html"> Change Password</a>
 						<hr>
 						<a href="Controller?action=logout">Log Out</a>
 						<hr>

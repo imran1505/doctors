@@ -1,6 +1,7 @@
 package com.utils;
 
 import java.math.BigInteger;
+import java.net.InetAddress;
 import java.util.Properties;
 import java.util.Random;
 
@@ -19,6 +20,7 @@ public class MailSender {
 	final static String emailServerPort = "465";
 	final static String emailBody ="email Body";
 	final static String emailSubject ="User Verification ";
+	final static String emailSubject2 ="Password Recovery ";
 	final static String emailSubjectInvitaion="Invite to join Contact Backup";
 	
 
@@ -31,11 +33,12 @@ public class MailSender {
 		props.put("mail.smtp.port", emailServerPort);
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.auth", "true");
-		// props.put("mail.smtp.debug", "true");
+		 props.put("mail.smtp.debug", "true");
 		props.put("mail.smtp.socketFactory.port", emailServerPort);
 		props.put("mail.smtp.socketFactory.class",
 				"javax.net.ssl.SSLSocketFactory");
 		props.put("mail.smtp.socketFactory.fallback", "false");
+		props.put("mail.smtp.starttls.enable", "true");
 
 		SecurityManager security = System.getSecurityManager();
 
@@ -68,20 +71,20 @@ public class MailSender {
 //				"Test Mail ajd", "Here goes the body");
 //	}
 
-	public static String sendRecoveryMail(String receiverEmailID) {
+	public static String sendRecoveryMail(String receiverEmailID,String type) {
 
-		String isMailSent=null;
+		String verificationCode=null;
 		Properties props = new Properties();
 		props.put("mail.smtp.user", senderEmailID);
 		props.put("mail.smtp.host", emailSMTPserver);
 		props.put("mail.smtp.port", emailServerPort);
 		props.put("mail.smtp.starttls.enable", "true");
 		props.put("mail.smtp.auth", "true");
-		// props.put("mail.smtp.debug", "true");
 		props.put("mail.smtp.socketFactory.port", emailServerPort);
 		props.put("mail.smtp.socketFactory.class",
 				"javax.net.ssl.SSLSocketFactory");
 		props.put("mail.smtp.socketFactory.fallback", "false");
+		props.put("mail.smtp.starttls.enable", "true");
 
 		SecurityManager security = System.getSecurityManager();
 
@@ -91,23 +94,23 @@ public class MailSender {
 			MimeMessage msg = new MimeMessage(session);
 			String randomString= generateRandomCode();
 			BigInteger uid = new BigInteger(receiverEmailID.getBytes());
-			//System.out.println(bigInt.toString());
-			String html = "<a href='http://localhost:8080/Doctor/changepwd.jsp?v="+randomString+"&uid="+uid+"'>Click here to recover yor password</a>";
+			InetAddress addy = InetAddress.getLocalHost();
+			String remoteIp = addy.getHostAddress();
+			String html = "<a href='http://"+remoteIp+":8080/Doctor/recover.html?v="+randomString+"&uid="+uid + "&type=" +type +"'>Click here to recover yor password</a>";
 			msg.setText(html, "UTF-8", "html");
-			//msg.setText(emailBody+ " " +randomString);
-			msg.setSubject(emailSubject);
+			msg.setSubject(emailSubject2);
 			msg.setFrom(new InternetAddress(senderEmailID));
 			msg.addRecipient(Message.RecipientType.TO, new InternetAddress(receiverEmailID));
 			Transport.send(msg);
-			isMailSent=randomString;
+			verificationCode=randomString;
 		} catch (Exception mex) {
 			mex.printStackTrace();
-			isMailSent="ERROR";
-			return isMailSent;
+			verificationCode="ERROR";
+			return verificationCode;
 		}
 
 	
-		return isMailSent;
+		return verificationCode;
 	}
 	
 	
@@ -132,10 +135,14 @@ public class MailSender {
 
 		// convert to big integer
 		BigInteger bigInt = new BigInteger(text.getBytes());
+		String s = bigInt.toString();
 		System.out.println(bigInt.toString());
+		
+		BigInteger number = new BigInteger(s);
+		System.out.println(number);
 
 		// convert back
-		String textBack = new String(bigInt.toByteArray());
+		String textBack = new String(number.toByteArray());
 		System.out.println("And back = " + textBack);
 	}
 
@@ -153,6 +160,7 @@ public class MailSender {
 		props.put("mail.smtp.socketFactory.port", emailServerPort);
 		props.put("mail.smtp.socketFactory.class","javax.net.ssl.SSLSocketFactory");
 		props.put("mail.smtp.socketFactory.fallback", "false");
+		props.put("mail.smtp.starttls.enable", "true");
 
 		SecurityManager security = System.getSecurityManager();
 
@@ -204,7 +212,10 @@ public class MailSender {
 			String randomString= generateRandomCode();
 			BigInteger uid = new BigInteger(receiverEmailID.getBytes());
 			//System.out.println(bigInt.toString());
-			String html = "<a href='http://localhost:8080/Doctor/verify.jsp?v="+randomString+"&uid="+uid+"'>Click here to activate your account</a>";
+			InetAddress addy = InetAddress.getLocalHost();
+			String remoteIp = addy.getHostAddress();
+			System.out.println("remote ip:"+remoteIp);
+			String html = "<a href='http://"+remoteIp+":8080/Doctor/verify.html?v="+randomString+"&uid="+uid+"'>Click here to activate your account</a>";
 			msg.setText(html, "UTF-8", "html");
 			//msg.setText(emailBody+ " " +randomString);
 			msg.setSubject(emailSubject);
