@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.xml.crypto.Data;
 
 import com.db.DAO;
 import com.dto.Doctor;
@@ -86,23 +87,26 @@ public class MainController extends HttpServlet {
 			if("signup".equals(action)){
 				doSignUp(request,response);
 			}
-			if("patientsignup".equals(action)){
+			else if("patientsignup".equals(action)){
 				doPatientSignUp(request, response);
 			}
-			if("changePassword".equals(action)){
+			else if("changePassword".equals(action)){
 				changePwd(request,response);
 			}
-			if("upload".equalsIgnoreCase(action)){
+			else if("upload".equalsIgnoreCase(action)){
 				upload(request,response);
 			}
-			if("symptoms".equalsIgnoreCase(action)){
+			else if("symptoms".equalsIgnoreCase(action)){
 				findDisease(request,response);
 			}
-			if("recover".equalsIgnoreCase(action)){
+			else if("recover".equalsIgnoreCase(action)){
 				recoverPassword(request,response);
 			}
-			if("newpwd".equalsIgnoreCase(action)){
+			else if("newpwd".equalsIgnoreCase(action)){
 				newPassword(request,response);
+			}
+			else if("bookAppointment".equalsIgnoreCase(action)){
+				bookAppointment(request,response);
 			}
 		}else{
 			
@@ -342,6 +346,22 @@ public class MainController extends HttpServlet {
 		boolean isNewPasswordInserted = dao.verifyRecovery(username, code, newPassword,type);
 		PrintWriter pw =response.getWriter();
 		pw.print(isNewPasswordInserted);
+	}
+	
+	
+	private void bookAppointment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String uid=request.getParameter("uid");
+		String date=request.getParameter("date");
+		BigInteger number = new BigInteger(uid);
+		String department = request.getParameter("department");
+		HttpSession session = request.getSession();
+		String patientId = (String) session.getAttribute("username");
+		String doctorId = new String(number.toByteArray());
+		System.out.println("Got request for uid:"+uid+" date:"+date+" doctorId:"+doctorId + " patient:"+patientId);
+		DAO dao = new DAO();
+		boolean isRequestCreated = dao.createAppointmentRequest(doctorId, patientId, date, department);
+		PrintWriter pw =response.getWriter();
+		pw.print(isRequestCreated);
 	}
 	
 //	private void xyz(){

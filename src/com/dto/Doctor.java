@@ -1,5 +1,7 @@
 package com.dto;
 
+import java.math.BigInteger;
+
 public class Doctor {
 
 	private String username;
@@ -112,6 +114,15 @@ public class Doctor {
 
 	public void setDepartment(String departmentName) {
 		this.department = Department.getDeparmentByName(departmentName);
+	}
+	
+	public String getName() {
+		return this.fname+ " " +this.lname;
+	}
+	
+	public String getUid() {
+		BigInteger bigInt = new BigInteger(this.getUsername().getBytes());
+		return bigInt.toString();
 	}
 
 	@Override

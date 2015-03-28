@@ -4,7 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum Department {
-	ENT(1, "ent"), ORTHO(2, "ortho"), PHYSICIAN(3, "physician");
+	ENT(1, "ENT"), ORTHO(2, "Orthopedics"), PHYSICIAN(3, "Physician") , SURGERY(4, "Surgery"),
+	SKIN(5, "SKIN");
 
 	private int departmentId;
 	private String departmentName;

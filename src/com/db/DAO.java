@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -231,16 +232,16 @@ public class DAO {
 			}
 			String sql = "select * from appointments where status=? and doctorid = ? appointmentdate"+dateCompare+" ? ";
 			PreparedStatement pst = con.prepareStatement(sql);
-			pst.setBoolean(1, isConfirmed);
+			pst.setString(1, ""+isConfirmed);
 			pst.setString(2, doctorid);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			java.sql.Date sqlDate = new java.sql.Date(new Date().getTime());
 			if(date == null || date.equals("")){
-				pst.setString(3, ">=" + sdf.format(new Date()));
+				pst.setDate(3,sqlDate );
 			}else{
 				pst.setString(3,"="+ sdf.format(date));
 			}
 			
-
 			ResultSet rs = pst.executeQuery();
 			System.out.println("st" + rs.getStatement());
 			while (rs.next()) {
@@ -305,6 +306,37 @@ public class DAO {
 			e1.printStackTrace();
 		}
 		return result;
+	}
+	
+	
+	public boolean createAppointmentRequest(String doctorId, String patientId, String date,String department) {
+		boolean response = false;
+		try {
+			Connection con = dataSource.getConnection();
+			String sql = "insert into appointments values (UUID(),?,?,?,?,?)";
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst = con.prepareStatement(sql);
+
+			pst.setString(1, doctorId);
+			pst.setString(2, patientId);
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+			Date d = sdf.parse(date);
+			java.sql.Date sqlDate = new java.sql.Date(d.getTime());
+			pst.setDate(3, sqlDate);
+			pst.setString(4, "pending");
+			pst.setString(5, department);
+			int rownum = pst.executeUpdate();
+			System.out.println("rownum:" + rownum);
+			if (rownum == 1) {
+				response = true;
+			}
+			con.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return response;
 	}
 	
 	

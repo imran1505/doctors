@@ -2,6 +2,7 @@ package com.controller;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.db.DAO;
+import com.dto.Appointment;
 import com.dto.Department;
+import com.dto.Doctor;
 import com.dto.Patient;
 
 /**
@@ -38,6 +41,7 @@ public class JSPController extends HttpServlet {
 		String uri= request.getRequestURL().toString();
 		System.out.println("request URI:"+request.getRequestURI());
 		String pageName = getActionNameFromURL(uri);
+		DAO dao = new DAO();
 		if("home".equals(pageName)){
 			HttpSession session = request.getSession();
 			String login = (String) session.getAttribute("login");
@@ -55,7 +59,6 @@ public class JSPController extends HttpServlet {
 		}else if("verify".equals(pageName)){
 			String uid = request.getParameter("uid");
 			String verificationCode = request.getParameter("v");
-			DAO dao = new DAO();
 			Patient patient = dao.getPatientFromDbByVerificationCode(verificationCode);
 			if(patient!=null && patient.getUsername()!=null){
 				String generatedUid = ""+new BigInteger(patient.getUsername().getBytes());
@@ -97,12 +100,22 @@ public class JSPController extends HttpServlet {
 			String username = (String) session.getAttribute("username");
 			String login = (String) session.getAttribute("login");
 			String type = (String) session.getAttribute("type");
+			
 			if ("true".equals(login) && username != null) {
 				if("doctor".equals(type)){
-					getServletContext().getRequestDispatcher("/welcome.jsp").forward(request, response);
-					return;
+					Doctor doctor = dao.getDoctorFromDb(username);
+					if("verified".equalsIgnoreCase(doctor.getStatus())){
+						List<Appointment> appointments= dao.getPendingAppointmentFromDbForDoctor(username, false, null);
+						request.setAttribute("appointments", appointments);
+						getServletContext().getRequestDispatcher("/welcome.jsp").forward(request, response);
+						return;
+					}else{
+						getServletContext().getRequestDispatcher("/incompletedoctor.jsp").forward(request, response);
+						return;
+					}
+					
+					
 				}else if("patient".equals(type)){
-					DAO dao = new DAO();
 					Patient patient = dao.getPatientFromDb(username);
 					if(patient == null){
 						getServletContext().getRequestDispatcher("/404.jsp").forward(request, response);
@@ -118,7 +131,7 @@ public class JSPController extends HttpServlet {
 			getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
 			return;
 		}else if("changePwd".equals(pageName)){
-			
+			//TODO make respective heading for doctor and patient e.g. doctors portal
 			HttpSession session = request.getSession();
 			String login = (String) session.getAttribute("login");
 			String username = (String) session.getAttribute("username");
@@ -130,8 +143,33 @@ public class JSPController extends HttpServlet {
 			}
 			getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
 			
-		}
-		else{
+		}else if("bookAppointment".equals(pageName)){
+			//TODO make respective heading for doctor and patient e.g. doctors portal
+			HttpSession session = request.getSession();
+			String login = (String) session.getAttribute("login");
+			String username = (String) session.getAttribute("username");
+			String type = (String) session.getAttribute("type");
+			String department = request.getParameter("department");
+			System.out.println("apoointmnet bokking for:"+department);
+			request.setAttribute("departments", Department.values());
+			System.out.println("username:"+username+" login:"+login+ " type:"+type);
+			if ("true".equals(login)) {
+				if(department!=null && department!=""){
+					
+					List<Doctor> doctorList = dao.getDoctorBasedOnDepartment(Department.getDeparmentByName(department));
+					request.setAttribute("department", department);
+					request.setAttribute("doctors", doctorList);
+					getServletContext().getRequestDispatcher("/bookDoctors.jsp").forward(request, response);
+					return;
+
+				}else{
+					getServletContext().getRequestDispatcher("/bookAppointment.jsp").forward(request, response);
+					return;
+				}
+			}
+			getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
+
+		}else{
 			getServletContext().getRequestDispatcher("/404.jsp").forward(request, response);
 			return;
 		}
@@ -142,7 +180,12 @@ public class JSPController extends HttpServlet {
 		if(url==null || url.length()<1)
 			return null;
 		int index = url.lastIndexOf("/");
-		String action = url.substring(index+1, url.length()-5);
+		int toIndex = url.length();
+		if(url.contains("?"))
+		{
+			toIndex=url.indexOf("?")-1;
+		}
+		String action = url.substring(index+1, toIndex-5);
 		return action;
 
 	}

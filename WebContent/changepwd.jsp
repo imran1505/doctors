@@ -5,7 +5,7 @@
 	<div id="headerContainer">
 		<div id="headerFont">
 			<a href="home.jsp">
-				<div style="font-size: 36px; font-weight: bold; color: #fff; display: inline">Doctors Portal ${type} ${username}</div>
+				<div style="font-size: 36px; font-weight: bold; color: #fff; display: inline">Doctors Portal</div>
 			</a>
 		</div>
 	</div>

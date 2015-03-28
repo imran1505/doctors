@@ -28,11 +28,28 @@
 	</div>
 	<section class="black-section">
 	<div style="text-align: center" class="ui-widget">
-		<label class="symptom-text" for="tags">You upcoming appointments</label><br> 
+		<label class="symptom-text" for="tags">You haven't verified your account. Please go to your mail and verify to get your account activated.</label><br> 
 	</div>
 	<br>
 	<br>
-
+	<div class="container">
+			<a id="changeImages" href="#" onclick="clickFileSelect()" class="symptom-text" for="tags" >
+			<c:if test="${not empty doctor.registrationDocName and doctor.status ne 'verified'}">
+				Change your registration doc
+				<div id="pdfview">
+					<embed  src="/static/${doctor.registrationDocName}" width="100%" height="700">
+				</div>
+			</c:if>
+			<c:if test="${empty doctor.registrationDocName  or doctor.status eq 'verified'}">
+				Upload your registration doc
+			</c:if>
+			</a>
+			<form action="Controller?action=upload&type=image" id="importForm" method="post" enctype="multipart/form-data">
+				<input onchange="changeFileName()" type="file" class="submitBtn" id="filename" accept="application/pdf" style="display: none" name="file" size="50" />
+			</form>
+			<br>
+			<div id="review" style="display:none;color:white">Your document has been uploaded. We will review and confirm your registration.</div>
+	</div>
 	</section>
 </body>
 <script>

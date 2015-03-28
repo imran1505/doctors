@@ -596,3 +596,11 @@ a#changeImage {
 }
 
 /***** patient home ****/
+
+
+/**apointmnet**/
+.doctorAppointment{
+	color: white;
+  float: left;
+  width: 100%;
+}

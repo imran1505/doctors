@@ -8,8 +8,10 @@
 <style>
 <%@ include file="../css/main.css" %>
 <%@ include file="../css/tabs.css" %>
+<%@ include file="../css/jquery-ui.min.css" %>
 </style>
 <script src="js/jquery.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/jqueryform.js"></script>
+<script src="js/jquery-ui.min.js"></script>
 </head>

@@ -40,8 +40,13 @@
 	</div>
 	<section class="black-section">
 	<div style="text-align: center" class="ui-widget">
-		<label class="symptom-text" for="tags">Feeling sick? Type your symptoms here</label><br> 
-		<input class="symptom-searchbox" id="tags" size="2"> 
+		<label class="symptom-text" for="tags">Feeling sick? Search for Doctors by department</label><br> 
+		<select name="department" id="department">
+		<option value="">Select</option>
+		<c:forEach var="department" items="${departments}">
+			<option value="${department.getDepartmentName()}">${department.getDepartmentName()}</option>
+		</c:forEach>
+	</select>
 		<input class="symptom-serach" id="submit-btn" type="button" value="Search">
 	</div>
 	</section>
@@ -51,77 +56,17 @@
 	</section>
 </body>
 <script>
-$(function() {
-    var availableTags = [
-      "Fever",
-      "Nausea",
-      "Vomitting",
-      "Bleeding",
-      "Headache",
-      "Cough",
-      "Stomach Ache",
-      "Swelling",
-      "Red Eyes",
-      "Rashes",
-      "Chest Pain",
-      "Throat Pain",
-      "Irritation",
-      "Shivering",
-    ];
-    function split( val ) {
-      return val.split( /,\s*/ );
-    }
-    function extractLast( term ) {
-      return split( term ).pop();
-    }
- 
-    $( "#tags" )
-      // don't navigate away from the field on tab when selecting an item
-      .bind( "keydown", function( event ) {
-        if ( event.keyCode === $.ui.keyCode.TAB &&
-            $( this ).autocomplete( "instance" ).menu.active ) {
-          event.preventDefault();
-        }
-      })
-      .autocomplete({
-        minLength: 0,
-        source: function( request, response ) {
-          // delegate back to autocomplete, but extract the last term
-          response( $.ui.autocomplete.filter(
-            availableTags, extractLast( request.term ) ) );
-        },
-        focus: function() {
-          // prevent value inserted on focus
-          return false;
-        },
-        select: function( event, ui ) {
-          var terms = split( this.value );
-          // remove the current input
-          terms.pop();
-          // add the selected item
-          terms.push( ui.item.value );
-          // add placeholder to get the comma-and-space at the end
-          terms.push( "" );
-          this.value = terms.join( ", " );
-          return false;
-        }
-      });
-  });
+
   
 
 	$('#submit-btn').click(function(event) {
 		event.preventDefault();
-		var symptoms = $('#tags').val();
-		if (symptoms == null || symptoms == "") {
+		var department = $('#department').val();
+		if (department == null || department == "") {
 			return;
 		}
-		var data = {
-			'symptoms' : symptoms,
-		};
-		$.post('Controller?action=symptoms', data, function(res) {
-			console.log("symptoms response:" + res);
-			$('.result').html(res);
-		});
+		$(location).attr('href',"bookAppointment.html?department="+department);
+		console.log("asdas");
 	});
 </script>
 </html>
