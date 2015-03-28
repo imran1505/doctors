@@ -2,6 +2,32 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ include file="header.jsp" %>
+<style>
+table {
+  background-color: transparent;
+  width:auto;
+  margin:50px;
+} 
+tbody {
+  display: table-row-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+th {
+  font-size: 1.4em;
+  text-align: left;
+  padding-top: 5px;
+  padding-bottom: 4px;
+  background-color: #A7C942;
+  color: #fff;
+}
+
+td,th {
+  font-size: 1.2em;
+  border: 1px solid #98bf21;
+  padding: 3px 7px 2px 7px;
+}
+</style> 
 <body>
 	<div id="headerContainer" width="100%"
 		style="background-color: #3b5998; height: 70px;">
@@ -29,11 +55,30 @@
 	<section class="black-section">
 	<div style="text-align: center" class="ui-widget">
 		<label class="symptom-text" for="tags">You upcoming appointments</label><br> 
+		
+		<!-- appointments -->
+		
 	</div>
-	<br>
-	<br>
 
 	</section>
+	<div style="text-align: center" class="ui-widget">
+	<table>
+		<c:forEach var="appointment" items="${appointments}">
+		<tr>
+		<td>${appointment.getId() }</td><td>${appointment.getPatientid() }</td><td>${appointment.getAppointmentdate() }</td><td>${appointment.getStatus() }</td>
+		</tr>
+		
+		<tr>
+		<td>${appointment.getId() }</td><td>${appointment.getPatientid() }</td><td>${appointment.getAppointmentdate() }</td>
+		</tr>
+		
+		<tr>
+		<td>${appointment.getId() }</td><td>${appointment.getPatientid() }</td><td>${appointment.getAppointmentdate() }</td>
+		</tr>
+			
+		</c:forEach>
+		</table>
+	 </div>
 </body>
 <script>
 	var active, listWidth, sign, factor, member_id;

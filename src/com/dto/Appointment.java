@@ -4,18 +4,19 @@ import java.sql.Date;
 
 public class Appointment {
 
-	private int id;
+	private String id;
 	private String patientid;
 	private String doctorid;
 	private Date appointmentdate;
-	private boolean status;
+	private String status;
 	private String department;
 
-	public int getId() {
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -43,11 +44,12 @@ public class Appointment {
 		this.appointmentdate = appointmentdate;
 	}
 
-	public boolean isStatus() {
+
+	public String getStatus() {
 		return status;
 	}
 
-	public void setStatus(boolean status) {
+	public void setStatus(String status) {
 		this.status = status;
 	}
 
@@ -61,8 +63,8 @@ public class Appointment {
 	
 	
 
-	public Appointment(int id, String patientid, String doctorid,
-			Date appointmentdate, boolean status, String department) {
+	public Appointment(String id, String patientid, String doctorid,
+			Date appointmentdate, String status, String department) {
 		super();
 		this.id = id;
 		this.patientid = patientid;

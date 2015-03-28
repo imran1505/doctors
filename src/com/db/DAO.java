@@ -230,24 +230,25 @@ public class DAO {
 			if(date == null || date.equals("")){
 				dateCompare = ">=";
 			}
-			String sql = "select * from appointments where status=? and doctorid = ? appointmentdate"+dateCompare+" ? ";
+			String sql = "select * from appointments where status=? and doctorid = ? and appointmentdate"+dateCompare+" ? ";
 			PreparedStatement pst = con.prepareStatement(sql);
-			pst.setString(1, ""+isConfirmed);
+			pst.setString(1, "pending");
 			pst.setString(2, doctorid);
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			java.sql.Date sqlDate = new java.sql.Date(new Date().getTime());
+			//TODO handling
 			if(date == null || date.equals("")){
 				pst.setDate(3,sqlDate );
 			}else{
-				pst.setString(3,"="+ sdf.format(date));
+				pst.setDate(3,sqlDate);
 			}
 			
 			ResultSet rs = pst.executeQuery();
 			System.out.println("st" + rs.getStatement());
 			while (rs.next()) {
-				Appointment appointment = new Appointment( rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getBoolean(5), rs.getString(6));
+				Appointment appointment = new Appointment( rs.getString(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getString(5), rs.getString(6));
 				appointments.add(appointment);
 			}
+			System.out.println(appointments);
 			con.close();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
@@ -280,7 +281,7 @@ public class DAO {
 			ResultSet rs = pst.executeQuery();
 			System.out.println("st" + rs.getStatement());
 			while (rs.next()) {
-				Appointment appointment = new Appointment( rs.getInt(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getBoolean(5), rs.getString(6));
+				Appointment appointment = new Appointment( rs.getString(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getString(5), rs.getString(6));
 				appointments.add(appointment);
 			}
 			con.close();
