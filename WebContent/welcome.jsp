@@ -25,7 +25,7 @@ th {
 td,th {
   font-size: 1.2em;
   border: 1px solid #98bf21;
-  padding: 3px 7px 2px 7px;
+  padding: 10px;
 }
 </style> 
 <body>
@@ -64,18 +64,9 @@ td,th {
 	<div style="text-align: center" class="ui-widget">
 	<table>
 		<c:forEach var="appointment" items="${appointments}">
-		<tr>
-		<td>${appointment.getId() }</td><td>${appointment.getPatientid() }</td><td>${appointment.getAppointmentdate() }</td><td>${appointment.getStatus() }</td>
-		</tr>
-		
-		<tr>
-		<td>${appointment.getId() }</td><td>${appointment.getPatientid() }</td><td>${appointment.getAppointmentdate() }</td>
-		</tr>
-		
-		<tr>
-		<td>${appointment.getId() }</td><td>${appointment.getPatientid() }</td><td>${appointment.getAppointmentdate() }</td>
-		</tr>
-			
+			<tr>
+			   <td>${appointment.getPatientName() }</td><td>${appointment.getAppointmentdate() }</td><td>${appointment.getStatus() }</td><td><input id="${appointment.getId() }" class="confirm" type="button" value="Confirm"></td>
+			</tr>
 		</c:forEach>
 		</table>
 	 </div>

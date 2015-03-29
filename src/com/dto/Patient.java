@@ -41,6 +41,10 @@ public class Patient {
 	public void setVerificationCode(String verificationCode) {
 		this.verificationCode = verificationCode;
 	}
+	
+	public String getName(){
+		return this.fname + this.lname;
+	}
 
 	@Override
 	public String toString() {

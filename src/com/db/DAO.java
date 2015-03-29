@@ -245,7 +245,13 @@ public class DAO {
 			ResultSet rs = pst.executeQuery();
 			System.out.println("st" + rs.getStatement());
 			while (rs.next()) {
-				Appointment appointment = new Appointment( rs.getString(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getString(5), rs.getString(6));
+				String patientId = rs.getString(2);
+				String doctorId = rs.getString(3);
+				Appointment appointment = new Appointment( rs.getString(1), patientId,doctorid, rs.getDate(4), rs.getString(5), rs.getString(6));
+				Patient p = getPatientFromDb(patientId);
+				Doctor d = getDoctorFromDb(doctorId);
+				appointment.setPatientName(p.getName());
+				appointment.setDoctorName(d.getName());
 				appointments.add(appointment);
 			}
 			System.out.println(appointments);
