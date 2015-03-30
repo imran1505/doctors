@@ -105,8 +105,10 @@ public class JSPController extends HttpServlet {
 				if("doctor".equals(type)){
 					Doctor doctor = dao.getDoctorFromDb(username);
 					if("verified".equalsIgnoreCase(doctor.getStatus())){
-						List<Appointment> appointments= dao.getPendingAppointmentFromDbForDoctor(username, false, null);
-						request.setAttribute("appointments", appointments);
+						List<Appointment> confirmedAppointments= dao.getConfirmedAppointmentFromDbForDoctor(username, false, null);
+						List<Appointment> pendingAppointments= dao.getPendingAppointmentFromDbForDoctor(username, false, null);
+						request.setAttribute("pendingAppointments", pendingAppointments);
+						request.setAttribute("confirmedAppointments", confirmedAppointments);
 						getServletContext().getRequestDispatcher("/welcome.jsp").forward(request, response);
 						return;
 					}else{

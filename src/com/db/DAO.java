@@ -262,6 +262,48 @@ public class DAO {
 		return appointments;
 	}
 	
+	
+	public List<Appointment> getConfirmedAppointmentFromDbForDoctor(String doctorid, boolean isConfirmed, Date date) {
+
+		List<Appointment> appointments = new ArrayList<Appointment>();
+		try {
+			Connection con = dataSource.getConnection();
+			String dateCompare = "=";
+			if(date == null || date.equals("")){
+				dateCompare = ">=";
+			}
+			String sql = "select * from appointments where status=? and doctorid = ? and appointmentdate"+dateCompare+" ? ";
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setString(1, "confirm");
+			pst.setString(2, doctorid);
+			java.sql.Date sqlDate = new java.sql.Date(new Date().getTime());
+			//TODO handling
+			if(date == null || date.equals("")){
+				pst.setDate(3,sqlDate );
+			}else{
+				pst.setDate(3,sqlDate);
+			}
+			
+			ResultSet rs = pst.executeQuery();
+			System.out.println("st" + rs.getStatement());
+			while (rs.next()) {
+				String patientId = rs.getString(2);
+				String doctorId = rs.getString(3);
+				Appointment appointment = new Appointment( rs.getString(1), patientId,doctorid, rs.getDate(4), rs.getString(5), rs.getString(6));
+				Patient p = getPatientFromDb(patientId);
+				Doctor d = getDoctorFromDb(doctorId);
+				appointment.setPatientName(p.getName());
+				appointment.setDoctorName(d.getName());
+				appointments.add(appointment);
+			}
+			System.out.println(appointments);
+			con.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		return appointments;
+	}
+	
 	public List<Appointment> getAppointmentFromDbForPatient(String patientId, boolean isConfirmed, Date date) {
 
 		List<Appointment> appointments = new ArrayList<Appointment>();
@@ -324,8 +366,8 @@ public class DAO {
 			PreparedStatement pst = con.prepareStatement(sql);
 			pst = con.prepareStatement(sql);
 
-			pst.setString(1, doctorId);
-			pst.setString(2, patientId);
+			pst.setString(1, patientId);
+			pst.setString(2, doctorId);
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 			Date d = sdf.parse(date);
 			java.sql.Date sqlDate = new java.sql.Date(d.getTime());

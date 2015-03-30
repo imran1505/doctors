@@ -57,8 +57,6 @@
 </body>
 <script>
 
-  
-
 	$('#submit-btn').click(function(event) {
 		event.preventDefault();
 		var department = $('#department').val();

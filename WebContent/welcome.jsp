@@ -6,7 +6,7 @@
 table {
   background-color: transparent;
   width:auto;
-  margin:50px;
+  margin: 50px auto;
 } 
 tbody {
   display: table-row-group;
@@ -56,19 +56,33 @@ td,th {
 	<div style="text-align: center" class="ui-widget">
 		<label class="symptom-text" for="tags">You upcoming appointments</label><br> 
 		
-		<!-- appointments -->
+		<c:if test="${empty confirmedAppointments}">
+		     It seems that you don't have any appointmnets upcoming.
+		</c:if>
+		<table>
+		<c:forEach var="appointment" items="${confirmedAppointments}">
+			<tr>
+			   <td>${appointment.getPatientName() }</td><td>${appointment.getAppointmentdate() }</td><td>${appointment.getStatus() }</td>
+			</tr>
+		</c:forEach>
+		</table>
 		
 	</div>
 
 	</section>
 	<div style="text-align: center" class="ui-widget">
+	<br>
+	<label class="symptom-text" for="tags">New Appointment Requests</label><br>
+	<c:if test="${empty pendingAppointments}">
+		     It seems that you haven't got any new appointmnet request
+	</c:if>
 	<table>
-		<c:forEach var="appointment" items="${appointments}">
+		<c:forEach var="appointment" items="${pendingAppointments}">
 			<tr>
-			   <td>${appointment.getPatientName() }</td><td>${appointment.getAppointmentdate() }</td><td>${appointment.getStatus() }</td><td><input id="${appointment.getId() }" class="confirm" type="button" value="Confirm"></td>
+			   <td>${appointment.getPatientName() }</td><td>${appointment.getAppointmentdate() }</td><td>${appointment.getStatus() }</td><td><input id="${appointment.getId() }" class="confirm" type="button" value="Approve"></td>
 			</tr>
 		</c:forEach>
-		</table>
+	</table>
 	 </div>
 </body>
 <script>
@@ -173,6 +187,12 @@ td,th {
 	} 
 	
 	$('#importForm').ajaxForm(options);
+	
+	$('.confirm').click(function(event) {
+		event.preventDefault();
+		var id = this.id;
+		console.log(id);
+	});
 	
 	
 </script>
