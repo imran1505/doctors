@@ -23,11 +23,19 @@ CREATE TABLE `patients` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `appointments` (
-  `id` int NOT NULL DEFAULT 0,
+  `id` varchar(50) NOT NULL DEFAULT '0',
   `patientid` varchar(30) DEFAULT '',
   `doctorid` varchar(30) DEFAULT '',
   `appointmentdate` date DEFAULT '2000-01-01',
-  `status` boolean DEFAULT false,
+  `status` varchar(50) DEFAULT '0',
   `department` varchar(30) DEFAULT '',
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `recovery` (
+  `uid` varchar(50) NOT NULL DEFAULT '',
+  `username` varchar(50) DEFAULT NULL,
+  `status` varchar(50) DEFAULT NULL,
+  `code` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
