@@ -9,10 +9,15 @@
 <%@ include file="../css/main.css" %>
 <%@ include file="../css/tabs.css" %>
 <%@ include file="../css/jquery-ui.min.css" %>
+<%@ include file="../css/bootstrap.css" %>
+<%@ include file="../css/owl.carousel.css" %>
 </style>
 
 <script src="js/jquery.min.js"></script>
 <script src="js/main.js"></script>
 <script src="js/jqueryform.js"></script>
 <script src="js/jquery-ui.min.js"></script>
+<script src="js/modernizr.custom.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/owl.carousel.min.js"></script>
 </head>

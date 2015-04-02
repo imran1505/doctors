@@ -5,8 +5,11 @@
 <style>
 table {
   background-color: transparent;
-  width:auto;
+  width:80%;
   margin: 50px auto;
+  font-size: 12px !important;
+  color:white !important;
+  text-transform: capitalize;
 } 
 tbody {
   display: table-row-group;
@@ -53,11 +56,11 @@ td,th {
 		</div>
 	</div>
 	<section class="black-section">
-	<div style="text-align: center" class="ui-widget">
+	<div style="text-align: center; width:49%;display:inline-block;" class="ui-widget">
 		<label class="symptom-text" for="tags">You upcoming appointments</label><br> 
 		
 		<c:if test="${empty confirmedAppointments}">
-		     It seems that you don't have any appointmnets upcoming.
+		     It seems that you don't have any appointment upcoming.
 		</c:if>
 		<table>
 		<c:forEach var="appointment" items="${confirmedAppointments}">
@@ -68,22 +71,38 @@ td,th {
 		</table>
 		
 	</div>
-
-	</section>
-	<div style="text-align: center" class="ui-widget">
+	<div style="text-align: center;width:49%;display:inline-block;" class="ui-widget">
 	<br>
 	<label class="symptom-text" for="tags">New Appointment Requests</label><br>
 	<c:if test="${empty pendingAppointments}">
-		     It seems that you haven't got any new appointmnet request
+		     It seems that you haven't got any new appointment request
 	</c:if>
 	<table>
 		<c:forEach var="appointment" items="${pendingAppointments}">
 			<tr>
-			   <td>${appointment.getPatientName() }</td><td>${appointment.getAppointmentdate() }</td><td>${appointment.getStatus() }</td><td><input id="${appointment.getId() }" class="confirm" type="button" value="Approve"></td>
+			   <td>${appointment.getPatientName() }</td><td>${appointment.getAppointmentdate() }</td><td>${appointment.getStatus() }</td>
+			        <td><input id="${appointment.getId() }" class="confirm" type="button" value="Approve"></td>
+			        <td><input id="${appointment.getId() }" class="cancel" type="button" value="Cancel"></td>
 			</tr>
 		</c:forEach>
 	</table>
 	 </div>
+	 
+	<div style="text-align: center;" class="ui-widget">
+	<br>
+	<label class="symptom-text" for="tags">Your appointment history</label><br>
+	<c:if test="${empty pastAppointments}">
+		     Never have been an appointment request made to you
+	</c:if>
+	<table>
+		<c:forEach var="appointment" items="${pastAppointments}">
+			<tr>
+			   <td>${appointment.getPatientName() }</td><td>${appointment.getAppointmentdate() }</td>
+			</tr>
+		</c:forEach>
+	</table>
+	 </div>
+	</section>
 </body>
 <script>
 	var active, listWidth, sign, factor, member_id;
@@ -190,8 +209,43 @@ td,th {
 	
 	$('.confirm').click(function(event) {
 		event.preventDefault();
-		var id = this.id;
-		console.log(id);
+		var bookingid = this.id;
+		console.log(bookingid);
+		var data = {
+				'bookingid': bookingid,
+		};
+
+	  $.post('Controller?action=approveAppointment', data, function(res) {
+			if (res=="true") {
+				console.log("booking successful");
+				window.alert("Appoitment Request has been succesfully approved");
+			}else {
+				console.log("booking unsuccessful");
+				window.alert("Appoitment Request failed. Please try later.");
+			}
+			$(location).attr('href',"welcome.html");
+		});
+	});
+	
+	
+	$('.cancel').click(function(event) {
+		event.preventDefault();
+		var bookingid = this.id;
+		console.log(bookingid);
+		var data = {
+				'bookingid': bookingid,
+		};
+
+	  $.post('Controller?action=cancelAppointment', data, function(res) {
+			if (res=="true") {
+				console.log("cancelling successful");
+				window.alert("Appoitment Request has been cancelled succesfully approved");
+			}else {
+				console.log("cancelling unsuccessful");
+				window.alert("Appoitment Request cancellation failed. Please try later.");
+			}
+			$(location).attr('href',"welcome.html");
+		});
 	});
 	
 	

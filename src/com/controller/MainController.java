@@ -108,6 +108,12 @@ public class MainController extends HttpServlet {
 			else if("bookAppointment".equalsIgnoreCase(action)){
 				bookAppointment(request,response);
 			}
+			else if("approveAppointment".equalsIgnoreCase(action)){
+				approveAppointment(request,response);
+			}
+			else if("cancelAppointment".equalsIgnoreCase(action)){
+				cancelAppointment(request,response);
+			}
 		}else{
 			
 		}
@@ -360,6 +366,22 @@ public class MainController extends HttpServlet {
 		System.out.println("Got request for uid:"+uid+" date:"+date+" doctorId:"+doctorId + " patient:"+patientId);
 		DAO dao = new DAO();
 		boolean isRequestCreated = dao.createAppointmentRequest(doctorId, patientId, date, department);
+		PrintWriter pw =response.getWriter();
+		pw.print(isRequestCreated);
+	}
+	
+	private void approveAppointment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String bookingid=request.getParameter("bookingid");
+		DAO dao = new DAO();
+		boolean isRequestCreated = dao.approveAppointment(bookingid);
+		PrintWriter pw =response.getWriter();
+		pw.print(isRequestCreated);
+	}
+	
+	private void cancelAppointment(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String bookingid=request.getParameter("bookingid");
+		DAO dao = new DAO();
+		boolean isRequestCreated = dao.cancelAppointment(bookingid);
 		PrintWriter pw =response.getWriter();
 		pw.print(isRequestCreated);
 	}

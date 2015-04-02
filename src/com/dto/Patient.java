@@ -43,7 +43,7 @@ public class Patient {
 	}
 	
 	public String getName(){
-		return this.fname + this.lname;
+		return this.fname +" "+ this.lname;
 	}
 
 	@Override

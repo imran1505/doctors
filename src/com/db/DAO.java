@@ -263,6 +263,47 @@ public class DAO {
 	}
 	
 	
+	public List<Appointment> getPastAppointmentFromDbForDoctor(String doctorid, boolean isConfirmed, Date date) {
+
+		List<Appointment> appointments = new ArrayList<Appointment>();
+		try {
+			Connection con = dataSource.getConnection();
+			String dateCompare = "=";
+			if(date == null || date.equals("")){
+				dateCompare = "<=";
+			}
+			String sql = "select * from appointments where doctorid = ? and appointmentdate"+dateCompare+" ? ";
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setString(1, doctorid);
+			java.sql.Date sqlDate = new java.sql.Date(new Date().getTime());
+			//TODO handling
+			if(date == null || date.equals("")){
+				pst.setDate(2,sqlDate );
+			}else{
+				pst.setDate(2,sqlDate);
+			}
+			
+			ResultSet rs = pst.executeQuery();
+			System.out.println("st" + rs.getStatement());
+			while (rs.next()) {
+				String patientId = rs.getString(2);
+				String doctorId = rs.getString(3);
+				Appointment appointment = new Appointment( rs.getString(1), patientId,doctorid, rs.getDate(4), rs.getString(5), rs.getString(6));
+				Patient p = getPatientFromDb(patientId);
+				Doctor d = getDoctorFromDb(doctorId);
+				appointment.setPatientName(p.getName());
+				appointment.setDoctorName(d.getName());
+				appointments.add(appointment);
+			}
+			System.out.println(appointments);
+			con.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		return appointments;
+	}
+	
+	
 	public List<Appointment> getConfirmedAppointmentFromDbForDoctor(String doctorid, boolean isConfirmed, Date date) {
 
 		List<Appointment> appointments = new ArrayList<Appointment>();
@@ -341,21 +382,43 @@ public class DAO {
 	
 	
 	
-	public int approveAppointment(int appointmentId) {
-		int result = 0;
+	public boolean approveAppointment(String appointmentId) {
+		boolean response = false;
 		try {
 			Connection con = dataSource.getConnection();
-			String sql = "update appointments set status = true where id=?";
+			String sql = "update appointments set status = 'confirm' where id=?";
 			PreparedStatement pst = con.prepareStatement(sql);
-			pst.setLong(1, appointmentId);
-
-			result = pst.executeUpdate();
+			pst.setString(1, appointmentId);
+			int result = pst.executeUpdate();
+			if(result == 1){
+				response = true;
+			}
 			con.close();
 		} catch (SQLException e1) {
 			e1.printStackTrace();
 		}
-		return result;
+		return response;
 	}
+	
+	public boolean cancelAppointment(String appointmentId) {
+		boolean response = false;
+		try {
+			Connection con = dataSource.getConnection();
+			String sql = "update appointments set status = 'cancel' where id=?";
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setString(1, appointmentId);
+			int result = pst.executeUpdate();
+			if(result == 1){
+				response = true;
+			}
+			con.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		return response;
+	}
+	
+	
 	
 	
 	public boolean createAppointmentRequest(String doctorId, String patientId, String date,String department) {

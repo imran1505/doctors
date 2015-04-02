@@ -28,7 +28,7 @@
 	</div>
 	<section class="black-section">
 	<div style="text-align: center" class="ui-widget">
-		<label class="symptom-text" for="tags">You haven't verified your account. Please go to your mail and verify to get your account activated.</label><br> 
+		<label class="symptom-text" for="tags">You haven't verified your account.We need to validate your registration document.</label><br> 
 	</div>
 	<br>
 	<br>
