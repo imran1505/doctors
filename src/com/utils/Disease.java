@@ -6,9 +6,12 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import com.dto.Department;
+
 public class Disease {
 
 	private static Map<String, ArrayList<String>> diseaseMap = new HashMap<String, ArrayList<String>>();
+	private static Map<String, Department> diseaseDepartmentMap = new HashMap<String, Department>();
 
 	static {
 		//malaria
@@ -17,6 +20,7 @@ public class Disease {
 		malariaList.add("fever");
 		malariaList.add("cold");
 		diseaseMap.put("Malaria",malariaList);
+		diseaseDepartmentMap.put("Malaria",Department.PHYSICIAN);
 
 
 		//dengue
@@ -27,6 +31,7 @@ public class Disease {
 		dengueList.add("vomiting");
 		dengueList.add("nausea");
 		diseaseMap.put("Dengue",dengueList);
+		diseaseDepartmentMap.put("Dengue",Department.PHYSICIAN);
 
 		//typhoid
 
@@ -36,6 +41,7 @@ public class Disease {
 		typhoidList.add("fever");
 		typhoidList.add("diarrhea");
 		diseaseMap.put("Typhoid",typhoidList);
+		diseaseDepartmentMap.put("Typhoid",Department.PHYSICIAN);
 
 		//measles
 
@@ -45,6 +51,8 @@ public class Disease {
 		measlesList.add("fever");
 		measlesList.add("red rashses");
 		diseaseMap.put("Measles",measlesList);
+		diseaseDepartmentMap.put("Measles",Department.PHYSICIAN);
+		
 
 		//cholera
 
@@ -53,6 +61,7 @@ public class Disease {
 		choleraList.add("vomiting");
 		choleraList.add("leg cramps");
 		diseaseMap.put("Cholera",choleraList);
+		diseaseDepartmentMap.put("Cholera",Department.PHYSICIAN);
 
 		//mumps
 
@@ -62,6 +71,7 @@ public class Disease {
 		mumpsList.add("headache");
 		mumpsList.add("fatigue");
 		diseaseMap.put("Mumps",mumpsList);
+		diseaseDepartmentMap.put("Mumps",Department.PHYSICIAN);
 
 		//influenza
 
@@ -73,6 +83,7 @@ public class Disease {
 		influenzaList.add("shivering");
 		influenzaList.add("coughing");
 		diseaseMap.put("Influenza",influenzaList);
+		diseaseDepartmentMap.put("Influenza",Department.PHYSICIAN);
 
 
 
@@ -84,6 +95,7 @@ public class Disease {
 		scurvyList.add("gum disease");
 		scurvyList.add("bleeding mucus membranes");
 		diseaseMap.put("Scurvy",scurvyList);
+		diseaseDepartmentMap.put("Scurvy",Department.PHYSICIAN);
 
 		//yellow fever
 
@@ -93,6 +105,7 @@ public class Disease {
 		yellowfeverList.add("gum disease");
 		yellowfeverList.add("bleeding mucus membranes");
 		diseaseMap.put("Yellow Fever",yellowfeverList);
+		diseaseDepartmentMap.put("Yellow Fever",Department.PHYSICIAN);
 
 		//allergy
 
@@ -103,6 +116,7 @@ public class Disease {
 		allergyList.add("sore throat");
 		allergyList.add("coughing");
 		diseaseMap.put("Allergy",allergyList);
+		diseaseDepartmentMap.put("Allergy",Department.PHYSICIAN);
 
 		//anemia
 
@@ -113,6 +127,7 @@ public class Disease {
 		anemiaList.add("rapid heart rate");
 		anemiaList.add("shortness of breath");
 		diseaseMap.put("Anemia",anemiaList);
+		diseaseDepartmentMap.put("Anemia",Department.PHYSICIAN);
 
 		//anxiety
 
@@ -122,6 +137,7 @@ public class Disease {
 		anxietyList.add("stress");
 		anxietyList.add("rapid heart rate");
 		diseaseMap.put("Anxiety",anxietyList);
+		diseaseDepartmentMap.put("Anxiety",Department.PHYSICIAN);
 
 
 		//appendicitis
@@ -133,6 +149,7 @@ public class Disease {
 		appendicitisList.add("vomiting");
 		appendicitisList.add("constipation or diarrhea");
 		diseaseMap.put("Appendicitis",appendicitisList);
+		diseaseDepartmentMap.put("Appendicitis",Department.SURGERY);
 
 		//bladderinfection
 
@@ -141,6 +158,7 @@ public class Disease {
 		bladderinfectionList.add("discomfort");
 		bladderinfectionList.add("burning when trying to urinate");
 		diseaseMap.put("Bladder Infection",bladderinfectionList);
+		diseaseDepartmentMap.put("Bladder Infection",Department.SKIN);
 
 
 
@@ -156,6 +174,7 @@ public class Disease {
 		vaginalYeastInfectionList.add("burning when trying to urinate");                
 		vaginalYeastInfectionList.add("painful intercourse");
 		diseaseMap.put("Vaginal Yeast Infection",vaginalYeastInfectionList);
+		diseaseDepartmentMap.put("Vaginal Yeast Infection",Department.SKIN);
 
 
 		//UrinaryTractInfection (UTI)
@@ -169,6 +188,7 @@ public class Disease {
 		urinaryTractInfectionList.add("urinary urgency"); 
 		urinaryTractInfectionList.add("rectal pain");
 		diseaseMap.put("Urinary Tract Infection",urinaryTractInfectionList);
+		diseaseDepartmentMap.put("Urinary Tract Infection",Department.NEPHROLOGY);
 
 
 
@@ -181,6 +201,7 @@ public class Disease {
 		stomachUlcerList.add("upper abdominal pain");
 		stomachUlcerList.add("Weight loss");
 		diseaseMap.put("Stomach Ulcer",stomachUlcerList);
+		diseaseDepartmentMap.put("Stomach Ulcer",Department.SURGERY);
 
 
 
@@ -202,6 +223,7 @@ public class Disease {
 		strokeList.add("change in consciousness");
 		strokeList.add("confusion"); 
 		diseaseMap.put("Stroke",strokeList);
+		diseaseDepartmentMap.put("Stroke",Department.PHYSICIAN);
 
 
 
@@ -217,6 +239,7 @@ public class Disease {
 		strepThroatSymptomsList.add("vomiting");
 		strepThroatSymptomsList.add("white patches in the throat");
 		diseaseMap.put("Strep Throat Symptoms",strepThroatSymptomsList);   
+		diseaseDepartmentMap.put("Strep Throat Symptoms",Department.ENT);
 
 
 		//sinusitis
@@ -233,12 +256,8 @@ public class Disease {
 		sinusitisList.add("earache");
 		sinusitisList.add("cough");
 		sinusitisList.add("bad breath");
-		diseaseMap.put("Sinusitis",sinusitisList);  
-
-
-
-
-
+		diseaseMap.put("Sinusitis",sinusitisList); 
+		diseaseDepartmentMap.put("Sinusitis",Department.PULMONARY);
 
 		//pregnancy
 
@@ -254,6 +273,7 @@ public class Disease {
 		pregnancyList.add("tiredness");
 		pregnancyList.add("vomiting");  
 		diseaseMap.put("Pregnancy",pregnancyList); 
+		diseaseDepartmentMap.put("Pregnancy",Department.GYNAECOLOGY);
 
 
 		//pneumonia 
@@ -270,7 +290,8 @@ public class Disease {
 		pneumoniaList.add("nasal congestion");
 		pneumoniaList.add("weakness");
 		pneumoniaList.add("sore throat");  
-		diseaseMap.put("Pneumonia ",pneumoniaList); 
+		diseaseMap.put("Pneumonia",pneumoniaList); 
+		diseaseDepartmentMap.put("Pneumonia",Department.PULMONARY);
 
 
 		//pancreaticCancer
@@ -288,7 +309,8 @@ public class Disease {
 		pancreaticCancerList.add("pale stools");
 		pancreaticCancerList.add("vomiting");
 		pancreaticCancerList.add("weight loss"); 
-		diseaseMap.put("Pancreatic Cancer ",pancreaticCancerList); 
+		diseaseMap.put("Pancreatic Cancer",pancreaticCancerList); 
+		diseaseDepartmentMap.put("Pancreatic Cancer",Department.ONCOLOGY);
 
 
 
@@ -306,7 +328,8 @@ public class Disease {
 		ovarianCancerList.add("leg swelling");
 		ovarianCancerList.add("nausea");
 		ovarianCancerList.add("pelvic pain");
-		diseaseMap.put("Ovarian Cancer ", ovarianCancerList);
+		diseaseMap.put("Ovarian Cancer", ovarianCancerList);
+		diseaseDepartmentMap.put("Ovarian Cancer",Department.ONCOLOGY);
 
 
 
@@ -330,7 +353,8 @@ public class Disease {
 		multipleSclerosisList.add("numbness");
 		multipleSclerosisList.add("vision changes");
 		multipleSclerosisList.add("tingling");
-		diseaseMap.put("Multiple Sclerosis ", multipleSclerosisList);
+		diseaseMap.put("Multiple Sclerosis", multipleSclerosisList);
+		diseaseDepartmentMap.put("Multiple Sclerosis",Department.PHYSICIAN);
 
 
 
@@ -350,7 +374,8 @@ public class Disease {
 		infectiousMononucleosisList.add("swollen upper eyelids");
 		infectiousMononucleosisList.add("swollen tonsils");
 		infectiousMononucleosisList.add("whitish coating on tonsils");
-		diseaseMap.put("Multiple Sclerosis ", multipleSclerosisList);
+		diseaseMap.put("Infectious Mononucleosis", infectiousMononucleosisList);
+		diseaseDepartmentMap.put("Infectious Mononucleosis",Department.PHYSICIAN);
 
 
 		//menopause
@@ -370,7 +395,8 @@ public class Disease {
 		menopauseList.add("frequent urination");
 		menopauseList.add("vaginal irritation");
 		menopauseList.add("weight gain");
-		diseaseMap.put("Menopause ", menopauseList); 
+		diseaseMap.put("Menopause ", menopauseList);
+		diseaseDepartmentMap.put("Menopause",Department.GYNAECOLOGY);
 
 
 		//lymeDisease 
@@ -389,7 +415,8 @@ public class Disease {
 		lymeDiseaseList.add("palpitations");
 		lymeDiseaseList.add("painful lymph nodes");
 		lymeDiseaseList.add("tingling"); 
-		diseaseMap.put("Lyme Disease ", lymeDiseaseList); 
+		diseaseMap.put("Lyme Disease", lymeDiseaseList);
+		diseaseDepartmentMap.put("Lyme Disease",Department.PHYSICIAN);
 
 
 		//systemicLupusErythematosus
@@ -413,7 +440,8 @@ public class Disease {
 		systemicLupusErythematosusList.add("rash");
 		systemicLupusErythematosusList.add("tingling");
 		systemicLupusErythematosusList.add("weakness");
-		diseaseMap.put("Systemic Lupus Erythematosus ", systemicLupusErythematosusList); 
+		diseaseMap.put("Systemic Lupus Erythematosus", systemicLupusErythematosusList); 
+		diseaseDepartmentMap.put("Systemic Lupus Erythematosus",Department.PULMONARY);
 
 
 		//Cervical Cancer
@@ -427,6 +455,7 @@ public class Disease {
 		CervicalList.add("Pelvic Pain");
 		CervicalList.add("Vaginal Discharge");
 		diseaseMap.put("Cervical Cancer", CervicalList) ;
+		diseaseDepartmentMap.put("Cervical Cancer",Department.ONCOLOGY);
 
 
 		//Common Cold
@@ -437,6 +466,7 @@ public class Disease {
 		CommoncoldList.add("scratchy or sore throat");
 		CommoncoldList.add("sneezing");
 		diseaseMap.put("Common Cold", CommoncoldList) ;
+		diseaseDepartmentMap.put("Common Cold",Department.PHYSICIAN);
 
 
 		//colon cncer
@@ -456,6 +486,7 @@ public class Disease {
 		ColoncancerList.add("Weakness");
 		ColoncancerList.add("Weight Loss");
 		diseaseMap.put("Colon Cancer", ColoncancerList) ;
+		diseaseDepartmentMap.put("Colon Cancer",Department.ONCOLOGY);
 
 		//depression
 
@@ -472,6 +503,7 @@ public class Disease {
 		depressionList.add("self-loathing");
 		depressionList.add("thoughts of suicide");
 		diseaseMap.put("Depression", depressionList) ;
+		diseaseDepartmentMap.put("depression",Department.PHYSICIAN);
 
 
 		//diabetes
@@ -494,6 +526,7 @@ public class Disease {
 		diabetesList.add("Weight Loss");
 		diabetesList.add("Yeast Infections");
 		diseaseMap.put("diabetes", diabetesList) ;
+		diseaseDepartmentMap.put("diabetes",Department.PHYSICIAN);
 
 		//early pregnancy
 
@@ -510,6 +543,7 @@ public class Disease {
 		earlypregnancyList.add("Nausea");
 		earlypregnancyList.add("implantation bleeding");
 		diseaseMap.put("Early Pregnency", earlypregnancyList) ;
+		diseaseDepartmentMap.put("Early Pregnency",Department.GYNAECOLOGY);
 
 		//heart attack
 
@@ -517,6 +551,7 @@ public class Disease {
 		heartattackList.add("sweat");
 		heartattackList.add("chest pain");
 		diseaseMap.put("Heart Attack", heartattackList) ;
+		diseaseDepartmentMap.put("Heart Attack",Department.CARDIOLOGY);
 
 		//high blood pressure(hypertension)
 
@@ -531,6 +566,7 @@ public class Disease {
 		hypertensionList.add("Nosebleeds");
 		hypertensionList.add("Shortness of Breath");
 		diseaseMap.put("Hyper Tension", hypertensionList) ;
+		diseaseDepartmentMap.put("Hyper Tension",Department.PHYSICIAN);
 
 		//HIV Infection
 
@@ -549,6 +585,7 @@ public class Disease {
 		HIVList.add("Vomiting");
 		HIVList.add("Weight Loss");
 		diseaseMap.put("HIV", HIVList) ;
+		diseaseDepartmentMap.put("HIV",Department.PHYSICIAN);
 
 
 		//Hyperthermia
@@ -569,6 +606,7 @@ public class Disease {
 		HyperthermiaList.add("Vomiting");
 		HyperthermiaList.add("Weakness");
 		diseaseMap.put("Hyperthermia", HyperthermiaList) ;
+		diseaseDepartmentMap.put("Hyperthermia",Department.PHYSICIAN);
 
 		//Irritable Bowel Syndrome (IBS)
 
@@ -583,6 +621,7 @@ public class Disease {
 		IBSList.add("Mucus in Stool");
 		IBSList.add("Watery Stool");
 		diseaseMap.put("Irritable Bowel Syndrome (IBS)", IBSList) ;
+		diseaseDepartmentMap.put("Irritable Bowel Syndrome (IBS)",Department.PHYSICIAN);
 
 		//Kidney Stone
 
@@ -597,6 +636,7 @@ public class Disease {
 		KidneyStoneList.add("Vomiting");
 		KidneyStoneList.add("Testicular Pain");
 		diseaseMap.put("Kidney Stone", KidneyStoneList) ;
+		diseaseDepartmentMap.put("Kidney Stone",Department.NEPHROLOGY);
 
 		//Leukemia
 
@@ -619,6 +659,7 @@ public class Disease {
 		LeukemiaList.add("Swollen Lymph Nodes");
 		LeukemiaList.add("Weight Loss");
 		diseaseMap.put("Leukemia", LeukemiaList) ;
+		diseaseDepartmentMap.put("Leukemia",Department.ONCOLOGY);
 
 
 		//lungCancer
@@ -640,6 +681,7 @@ public class Disease {
 		lungCancerList.add("weakness");
 		lungCancerList.add("weight loss");          
 		diseaseMap.put("Lung Cancer ", lungCancerList) ;
+		diseaseDepartmentMap.put("Lung Cancer",Department.ONCOLOGY);
 
 	}
 
@@ -682,6 +724,10 @@ public class Disease {
 		return diseaseList;
 	}
 	
+	
+	public static Department getDepartmentNameFromDisease(String diseaseName){
+		return diseaseDepartmentMap.get(diseaseName);
+	}
 	public static void main(String[] args) {
 		
 		Set<String> set = new HashSet<>();

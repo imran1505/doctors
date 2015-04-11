@@ -47,7 +47,7 @@
 	</section>
 	
 	<section class="white-section">
-	<div class="result" style="text-align: center" class="ui-widget"></div>
+	<div class="result" class="ui-widget"></div>
 	</section>
 </body>
 <script>

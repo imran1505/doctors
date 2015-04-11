@@ -5,7 +5,10 @@ import java.util.Map;
 
 public enum Department {
 	ENT(1, "ENT"), ORTHO(2, "Orthopedics"), PHYSICIAN(3, "Physician") , SURGERY(4, "Surgery"),
-	SKIN(5, "SKIN");
+	SKIN(5, "Skin"),GYNAECOLOGY(6,"Gynaecology"),PEDIATRICS(7,"Pediatrics"),PHYSIOTHERAPY(8,"Physiotherapy"),
+	RADIOLOGY(9,"Radiology"),ONCOLOGY(10,"Oncology"),ANESTHESIA(11,"Anesthesia"),DENTISTRY(11,"Dentistry"),
+	NURSING(12,"Nursing"),NEPHROLOGY(13,"Nephrology"),CARDIOLOGY(14,"Cardiology"),PULMONARY(15,"Pulmonary")
+	;
 
 	private int departmentId;
 	private String departmentName;

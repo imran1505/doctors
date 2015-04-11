@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import javax.xml.crypto.Data;
 
 import com.db.DAO;
+import com.dto.Department;
 import com.dto.Doctor;
 import com.dto.Patient;
 import com.utils.Disease;
@@ -297,13 +298,20 @@ public class MainController extends HttpServlet {
 		}
 		ArrayList<String> diseaseList = Disease.findDisease(symptomList);
 		System.out.println("Disease found:"+diseaseList);
+		//http://localhost:8080/Doctor/bookAppointment.html?department=Orthopedics
 		PrintWriter pw =response.getWriter();
 		if(diseaseList!=null && !diseaseList.isEmpty()){
 			pw.print("<div class='headingDisease'>You may have following disease</div>");
 			for(String disease:diseaseList){
+				pw.print("<div class='diseaseBlock'>");
 				pw.print("<h3>"+disease+"</h3>");
 				pw.print(Disease.getFormattedDiseaseSymptoms(disease));
-				pw.print("<br><br>");
+				pw.print("<br>");
+				Department department = Disease.getDepartmentNameFromDisease(disease);
+				if(department!=null){
+					pw.print("<a href='http://localhost:8080/Doctor/bookAppointment.html?department="+department.getDepartmentName()+"'>Find Relevant Doctors</a>");
+				}
+				pw.print("</div>");
 			}
 			
 		}else{
