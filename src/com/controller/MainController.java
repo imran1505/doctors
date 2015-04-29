@@ -391,12 +391,13 @@ public class MainController extends HttpServlet {
 		String date=request.getParameter("date");
 		BigInteger number = new BigInteger(uid);
 		String department = request.getParameter("department");
+		String slot = request.getParameter("slot");
 		HttpSession session = request.getSession();
 		String patientId = (String) session.getAttribute("username");
 		String doctorId = new String(number.toByteArray());
 		System.out.println("Got request for uid:"+uid+" date:"+date+" doctorId:"+doctorId + " patient:"+patientId);
 		DAO dao = new DAO();
-		boolean isRequestCreated = dao.createAppointmentRequest(doctorId, patientId, date, department);
+		boolean isRequestCreated = dao.createAppointmentRequest(doctorId, patientId, date, department,slot);
 		PrintWriter pw =response.getWriter();
 		pw.print(isRequestCreated);
 	}

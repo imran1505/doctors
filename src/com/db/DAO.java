@@ -453,11 +453,11 @@ public class DAO {
 	
 	
 	
-	public boolean createAppointmentRequest(String doctorId, String patientId, String date,String department) {
+	public boolean createAppointmentRequest(String doctorId, String patientId, String date,String department,String slot) {
 		boolean response = false;
 		try {
 			Connection con = dataSource.getConnection();
-			String sql = "insert into appointments values (UUID(),?,?,?,?,?)";
+			String sql = "insert into appointments values (UUID(),?,?,?,?,?,?)";
 			PreparedStatement pst = con.prepareStatement(sql);
 			pst = con.prepareStatement(sql);
 
@@ -469,6 +469,7 @@ public class DAO {
 			pst.setDate(3, sqlDate);
 			pst.setString(4, "pending");
 			pst.setString(5, department);
+			pst.setString(6, slot);
 			int rownum = pst.executeUpdate();
 			System.out.println("rownum:" + rownum);
 			if (rownum == 1) {

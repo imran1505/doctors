@@ -78,6 +78,16 @@ $(document).ready(function(){
 //Disabled with:
 $('#submit-btn').prop("disabled",true);
 $('#submit-btn').css("background", "#ccc");
+
+var slotNumber;
+$(".boxes").click(function(){
+	$(".boxes").removeClass('selected');
+	$(this).addClass('selected');
+	
+	var value = $(this).attr('data-value');
+	$('#submit-btn').prop("disabled",false);
+	slotNumber = value;
+});
 /* background: #3b5998; */
 
 // Enabled with:
@@ -101,6 +111,7 @@ $(function() {
 						'date': bookingDate,
 						'uid' : uid,
 						'department' : '${department}',
+						'slot' :slotNumber,
 				};
 
 			  $.post('Controller?action=bookAppointment', data, function(res) {
@@ -224,14 +235,6 @@ $(function() {
  	}
  	
  	
- 	
- 	$(".boxes").click(function(){
-		$(".boxes").removeClass('selected');
-		$(this).addClass('selected');
-		
-		var value = $(this).attr('data-value');
-		alert(value);
-	});
  	
 });	
 </script>
