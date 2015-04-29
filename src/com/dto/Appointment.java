@@ -12,6 +12,7 @@ public class Appointment {
 	private String department;
     private String doctorName;
     private String patientName;
+    private String slot;
 
 	public String getId() {
 		return id;
@@ -81,7 +82,7 @@ public class Appointment {
 	}
 
 	public Appointment(String id, String patientid, String doctorid,
-			Date appointmentdate, String status, String department) {
+			Date appointmentdate, String status, String department, String slot) {
 		super();
 		this.id = id;
 		this.patientid = patientid;
@@ -89,6 +90,15 @@ public class Appointment {
 		this.appointmentdate = appointmentdate;
 		this.status = status;
 		this.department = department;
+		this.slot = slot;
+	}
+
+	public String getSlot() {
+		return slot;
+	}
+
+	public void setSlot(String slot) {
+		this.slot = slot;
 	}
 
 	@Override
@@ -96,8 +106,11 @@ public class Appointment {
 		return "Appointment [id=" + id + ", patientid=" + patientid
 				+ ", doctorid=" + doctorid + ", appointmentdate="
 				+ appointmentdate + ", status=" + status + ", department="
-				+ department + "]";
+				+ department + ", doctorName=" + doctorName + ", patientName="
+				+ patientName + ", slot=" + slot + "]";
 	}
+
+	
 	
 	
 

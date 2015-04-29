@@ -39,6 +39,15 @@
 		</div>
 	</div>
 	<section class="black-section">
+	<c:if test="${not empty cuid}">
+	    <div style="text-align: center" class="ui-widget">
+		<div class="iframe" style="display:hidden;">
+    			<iframe name="ifrm" id="ifrm" src="http://localhost:9090/?name=${name}&id=${cuid}" frameborder="0">
+        				Your browser doesn't support chats.
+    			</iframe>
+		</div>
+	</div>
+	</c:if>
 	<div style="text-align: center" class="ui-widget">
 		<label class="symptom-text" for="tags">Feeling sick? Type your symptoms here</label><br> 
 		<input class="symptom-searchbox" id="tags" size="2"> 
@@ -332,5 +341,45 @@ $(function() {
 			$('.result').html(res);
 		});
 	});
+	
+	$('#submit-btn').click(function(event) {
+		event.preventDefault();
+		var symptoms = $('#tags').val();
+		if (symptoms == null || symptoms == "") {
+			return;
+		}
+		var data = {
+			'symptoms' : symptoms,
+		};
+		$.post('Controller?action=symptoms', data, function(res) {
+			console.log("symptoms response:" + res);
+			$('.result').html(res);
+		});
+	});
+	
+	<c:if test="${empty cuid }">
+      var timerId = setInterval(
+			function(){
+				var data = {};
+				$.post('Controller?action=getChatUid', data, function(res) {
+					console.log("slot:"+res);
+					if(res.indexOf("error")==-1){
+				        $(location).attr('href',"welcome.html?cuid="+res);
+						console.log("symptoms response:" + res);
+						return;
+				}
+					console.log("symptoms response:" + res);
+				});
+				},3000
+			);
+	</c:if>
+/* 	function loadIframe(iframeName, url) {
+	    var $iframe = $('#' + iframeName);
+	    if ( $iframe.length ) {
+	        $iframe.attr('src',url);   
+	        return false;
+	    }
+	    return true;
+	} */
 </script>
 </html>

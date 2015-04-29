@@ -90,17 +90,23 @@ td,th {
 	 
 	<div style="text-align: center;" class="ui-widget">
 	<br>
+	<div class="halfleft">
 	<label class="symptom-text" for="tags">Your appointment history</label><br>
 	<c:if test="${empty pastAppointments}">
 		     Never have been an appointment request made to you
 	</c:if>
-	<table>
+	<table style="width:inherit !important">
 		<c:forEach var="appointment" items="${pastAppointments}">
 			<tr>
 			   <td>${appointment.getPatientName() }</td><td>${appointment.getAppointmentdate() }</td>
 			</tr>
 		</c:forEach>
 	</table>
+	</div>
+	<div class="halfright">
+	<label class="symptom-text" for="tags">You are Online</label><br>
+	<iframe style="height:500px;background: white;" src="http://localhost:9090/?name=${doctorName}&id=${uid}"></iframe>
+	</div>
 	 </div>
 	</section>
 </body>

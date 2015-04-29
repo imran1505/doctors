@@ -247,7 +247,7 @@ public class DAO {
 			while (rs.next()) {
 				String patientId = rs.getString(2);
 				String doctorId = rs.getString(3);
-				Appointment appointment = new Appointment( rs.getString(1), patientId,doctorid, rs.getDate(4), rs.getString(5), rs.getString(6));
+				Appointment appointment = new Appointment( rs.getString(1), patientId,doctorid, rs.getDate(4), rs.getString(5), rs.getString(6),rs.getString(7));
 				Patient p = getPatientFromDb(patientId);
 				Doctor d = getDoctorFromDb(doctorId);
 				appointment.setPatientName(p.getName());
@@ -262,6 +262,38 @@ public class DAO {
 		return appointments;
 	}
 	
+	
+	public List<String> getSlotsFromDbForDoctor(String doctorid, Date date) {
+
+		List<String> slotList = new ArrayList<>();
+		try {
+			Connection con = dataSource.getConnection();
+			String dateCompare = "=";
+			if(date == null || date.equals("")){
+				dateCompare = "=";
+			}
+			String sql = "select slot from appointments where doctorid = ? and appointmentdate"+dateCompare+" ? ";
+			PreparedStatement pst = con.prepareStatement(sql);
+			pst.setString(1, doctorid);
+			java.sql.Date sqlDate = new java.sql.Date(new Date().getTime());
+			if(date == null || date.equals("")){
+				pst.setDate(2,sqlDate );
+			}else{
+				pst.setDate(2,sqlDate);
+			}
+			
+			ResultSet rs = pst.executeQuery();
+			System.out.println("st" + rs.getStatement());
+			while (rs.next()) {
+				slotList.add(rs.getString(1));
+			}
+			System.out.println("not available slotlist for doctorid:"+doctorid+" date:"+date+" slots:"+slotList);
+			con.close();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		return slotList;
+	}
 	
 	public List<Appointment> getPastAppointmentFromDbForDoctor(String doctorid, boolean isConfirmed, Date date) {
 
@@ -288,7 +320,7 @@ public class DAO {
 			while (rs.next()) {
 				String patientId = rs.getString(2);
 				String doctorId = rs.getString(3);
-				Appointment appointment = new Appointment( rs.getString(1), patientId,doctorid, rs.getDate(4), rs.getString(5), rs.getString(6));
+				Appointment appointment = new Appointment( rs.getString(1), patientId,doctorid, rs.getDate(4), rs.getString(5), rs.getString(6),rs.getString(7));
 				Patient p = getPatientFromDb(patientId);
 				Doctor d = getDoctorFromDb(doctorId);
 				appointment.setPatientName(p.getName());
@@ -330,7 +362,7 @@ public class DAO {
 			while (rs.next()) {
 				String patientId = rs.getString(2);
 				String doctorId = rs.getString(3);
-				Appointment appointment = new Appointment( rs.getString(1), patientId,doctorid, rs.getDate(4), rs.getString(5), rs.getString(6));
+				Appointment appointment = new Appointment( rs.getString(1), patientId,doctorid, rs.getDate(4), rs.getString(5), rs.getString(6),rs.getString(7));
 				Patient p = getPatientFromDb(patientId);
 				Doctor d = getDoctorFromDb(doctorId);
 				appointment.setPatientName(p.getName());
@@ -357,7 +389,7 @@ public class DAO {
 			String sql = "select * from appointments where status=? and patientid=? and appointmentdate"+dateCompare+" ? ";
 			PreparedStatement pst = con.prepareStatement(sql);
 			String todaysDate ="";
-			pst.setBoolean(1, isConfirmed);
+			pst.setString(1, "confirm");
 			pst.setString(2, patientId);
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			if(date == null || date.equals("")){
@@ -370,7 +402,7 @@ public class DAO {
 			ResultSet rs = pst.executeQuery();
 			System.out.println("st" + rs.getStatement());
 			while (rs.next()) {
-				Appointment appointment = new Appointment( rs.getString(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getString(5), rs.getString(6));
+				Appointment appointment = new Appointment( rs.getString(1), rs.getString(2), rs.getString(3), rs.getDate(4), rs.getString(5), rs.getString(6),rs.getString(7));
 				appointments.add(appointment);
 			}
 			con.close();

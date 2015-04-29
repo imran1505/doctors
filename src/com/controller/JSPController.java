@@ -108,7 +108,12 @@ public class JSPController extends HttpServlet {
 						List<Appointment> confirmedAppointments= dao.getConfirmedAppointmentFromDbForDoctor(username, false, null);
 						List<Appointment> pendingAppointments= dao.getPendingAppointmentFromDbForDoctor(username, false, null);
 						List<Appointment> pastAppointments= dao.getPastAppointmentFromDbForDoctor(username, false, null);
+						String name = (String) session.getAttribute("name");
+						BigInteger uid = new BigInteger(username.getBytes());
 						request.setAttribute("pendingAppointments", pendingAppointments);
+						request.setAttribute("doctorName", name);
+						request.setAttribute("uid", ""+uid);
+						
 						request.setAttribute("confirmedAppointments", confirmedAppointments);
 						request.setAttribute("pastAppointments", pastAppointments);
 						getServletContext().getRequestDispatcher("/welcome.jsp").forward(request, response);
@@ -127,6 +132,13 @@ public class JSPController extends HttpServlet {
 					if(!"verified".equalsIgnoreCase(patient.getVerificationCode())){
 						getServletContext().getRequestDispatcher("/incomplete.jsp").forward(request, response);
 						return;
+					}
+					String chatUid = request.getParameter("cuid");
+					System.out.println("chatUid:"+chatUid);
+					if(chatUid!=null && !chatUid.equals("")){
+						request.setAttribute("cuid",chatUid);
+					}else{
+						request.setAttribute("cuid","");
 					}
 					getServletContext().getRequestDispatcher("/welcomep.jsp").forward(request, response);
 					return;

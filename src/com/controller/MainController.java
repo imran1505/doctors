@@ -3,7 +3,14 @@ package com.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,9 +18,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.xml.crypto.Data;
 
 import com.db.DAO;
+import com.dto.Appointment;
 import com.dto.Department;
 import com.dto.Doctor;
 import com.dto.Patient;
@@ -24,6 +31,16 @@ import com.utils.DocumentUploader;
 
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private static List<String> slotList = new ArrayList<>();
+	
+	static{
+		slotList.add("1");
+		slotList.add("2");
+		slotList.add("3");
+		slotList.add("4");
+		slotList.add("5");
+		slotList.add("6");
+	}
 
     public MainController() {
     }
@@ -114,6 +131,12 @@ public class MainController extends HttpServlet {
 			}
 			else if("cancelAppointment".equalsIgnoreCase(action)){
 				cancelAppointment(request,response);
+			}
+			else if("getSlots".equalsIgnoreCase(action)){
+				getSlots(request,response);
+			}
+			else if("getChatUid".equalsIgnoreCase(action)){
+				getChatUid(request,response);
 			}
 		}else{
 			
@@ -394,6 +417,55 @@ public class MainController extends HttpServlet {
 		pw.print(isRequestCreated);
 	}
 	
+	private void getSlots(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String uid=request.getParameter("uid");
+		String date=request.getParameter("date");
+		BigInteger number = new BigInteger(uid);
+		HttpSession session = request.getSession();
+		String patientId = (String) session.getAttribute("username");
+		String doctorId = new String(number.toByteArray());
+		System.out.println("Got request for uid:"+uid+" date:"+date+" doctorId:"+doctorId + " patient:"+patientId);
+		DAO dao = new DAO();
+		DateFormat format = new SimpleDateFormat("MM-dd-yyyy", Locale.ENGLISH);
+		Date d = null;
+		System.out.println(date);
+		try {
+			d = format.parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		List<String> availableSlots = new ArrayList<>(slotList);
+		List<String> notAvailableSlots = dao.getSlotsFromDbForDoctor(doctorId , d);
+		availableSlots.removeAll(notAvailableSlots);
+		PrintWriter pw =response.getWriter();
+		pw.print(availableSlots);
+	}
+	
+	private void getChatUid(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		String patientId = (String) session.getAttribute("username");
+		System.out.println("Got request for patient:"+patientId);
+		DAO dao = new DAO();
+		List<Appointment> appointments = dao.getAppointmentFromDbForPatient(patientId, true, null);
+		int hour = getCurrentHourTimeSlot();
+		System.out.println("hour:"+hour);
+		PrintWriter pw =response.getWriter();
+		if(hour == 0){
+			pw.print("error");
+		}
+		for(Appointment app :appointments){
+			int slot = Integer.parseInt(app.getSlot());
+			if(slot==hour){
+				String username =app.getDoctorid();
+				BigInteger uid = new BigInteger(username.getBytes());
+				pw.print(uid);
+				//TODO see if break;
+				return;
+			}
+		}
+		
+	}
+	
 //	private void xyz(){
 //		File file = new File(filePath);
 //        int length   = 0;
@@ -425,6 +497,31 @@ public class MainController extends HttpServlet {
 //        outStream.close();
 //	}
 	
+	
+	private int getCurrentHourTimeSlot(){
+		Calendar rightNow = Calendar.getInstance();
+		int hour = rightNow.get(Calendar.HOUR_OF_DAY);
+		if(hour==10){
+			return 1;
+		}
+		if(hour==11){
+			return 2;
+		}
+		if(hour==12){
+			return 3;
+		}
+		if(hour==13){
+			return 4;
+		}
+		if(hour==15){
+			return 5;
+		}
+		if(hour==16){
+			return 6;
+		}
+		
+		return 0;
+	}
 	
 	
 

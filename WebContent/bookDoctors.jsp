@@ -55,6 +55,16 @@
 	   <br>
 	   <hr>
 	   <br>	
+	   <div class='slots'>
+	   		    <div class="boxes" data-value="1">9-10 a.m</div>
+				<div class="boxes" data-value="2">10-11 a.m</div>
+				<div class="boxes" data-value="3">11-12 a.m</div>
+				<br>
+				<br>
+				<div class="boxes" data-value="4">2-3 p.m</div>
+				<div class="boxes" data-value="5">3-4 p.m</div>
+				<div class="boxes" data-value="6">4-5 p.m</div>
+	   </div>
 		<input class="symptom-serach" id="submit-btn" type="button" value="Book">
 	</div>
 	</section>
@@ -64,7 +74,14 @@
 	</section>
 </body>
 <script>
+$(document).ready(function(){
+//Disabled with:
+$('#submit-btn').prop("disabled",true);
+$('#submit-btn').css("background", "#ccc");
+/* background: #3b5998; */
 
+// Enabled with:
+/* $('input[type="submit"], input[type="button"], button').disable(false); */
 $(function() {
     $( "#datepicker" ).datepicker({ minDate: 0});
   });
@@ -100,5 +117,122 @@ $(function() {
 				});
 				
 			});
+	
+ 	$("#datepicker").datepicker({
+ 		  minDate: 0,
+		  onSelect: function(dateText) {
+		    console.log("Selected date: " + dateText + "; input's current value: " + this.value);
+		    var uid = $('input[name=type]:checked').val();
+			
+			if(uid==null || uid.length==0){
+				return;
+			}
+			getSlots();
+		  }
+		}); 
+ 	
+ 	$('input:radio').change(
+ 		    function(){
+ 		        console.log('changed');
+ 		        var uid = $('input[name=type]:checked').val();
+ 		        console.log(uid);
+ 		        
+ 		        var date = $( "#datepicker" ).datepicker( "getDate" );
+ 				if(date==null || date.length==0){
+ 					return;
+ 				}
+ 				
+ 		        getSlots();
+ 		    }
+ 		); 
+ 	
+ 	function getSlots(){
+		event.preventDefault();
+		console.log("getting slots");
+		var date = $( "#datepicker" ).datepicker( "getDate" ),
+		day  = date.getDate(),  
+        month = date.getMonth() + 1,              
+        year =  date.getFullYear();
+		
+		if(date==null || date.length==0){
+			return;
+		}
+		
+		var bookingDate = day + '-' + month + '-' + year;
+		var uid = $('input[name=type]:checked').val();
+		
+		if(uid==null || uid.length==0){
+			return;
+		}
+		
+		console.log(day + '-' + month + '-' + year);
+		
+		var data = {
+				'date': bookingDate,
+				'uid' : uid,
+				'department' : '${department}',
+		};
+
+	  $.post('Controller?action=getSlots', data, function(res) {
+			if (res!=null || res.length!=0) {
+				console.log("slots recieved:"+res);
+				$(".slots").show();
+				if(res.indexOf("1") === -1){
+					$("div").find("[data-value=1]").addClass('disable');
+					var divText = $("div").find("[data-value=1]").text();
+					$("div").find("[data-value=1]").text("Filled");
+					$("div").find("[data-value=1]").attr("disabled", "disabled").off('click');
+				}
+				
+				if(res.indexOf("2") === -1){
+					$("div").find("[data-value=2]").addClass('disable');
+					var divText = $("div").find("[data-value=2]").text();
+					$("div").find("[data-value=2]").text("Filled");
+					$("div").find("[data-value=2]").attr("disabled", "disabled").off('click');
+				}
+				if(res.indexOf("3") === -1){
+					$("div").find("[data-value=3]").addClass('disable');
+					var divText = $("div").find("[data-value=3]").text();
+					$("div").find("[data-value=3]").text("Filled");
+					$("div").find("[data-value=3]").attr("disabled", "disabled").off('click');
+				}
+				if(res.indexOf("4") === -1){
+					$("div").find("[data-value=4]").addClass('disable');
+					var divText = $("div").find("[data-value=4]").text();
+					$("div").find("[data-value=4]").text("Filled");
+					$("div").find("[data-value=4]").attr("disabled", "disabled").off('click');
+				}
+				if(res.indexOf("5") === -1){
+					$("div").find("[data-value=5]").addClass('disable');
+					/* var divText = $("div").find("[data-value=5]").text(); */
+					$("div").find("[data-value=5]").text("Filled");
+					$("div").find("[data-value=5]").attr("disabled", "disabled").off('click');
+				}
+				if(res.indexOf("5") === -1){
+					$("div").find("[data-value=6]").addClass('disable');
+					var divText = $("div").find("[data-value=6]").text();
+					$("div").find("[data-value=6]").text("Filled");
+					$("div").find("[data-value=6]").attr("disabled", "disabled").off('click');
+				}
+				
+				
+			}else {
+				window.alert("Sorry! No slots on this day Please try some other date.");
+				$(location).attr('href',"welcome.html");
+			}
+		});
+ 	}
+ 	
+ 	
+ 	
+ 	$(".boxes").click(function(){
+		$(".boxes").removeClass('selected');
+		$(this).addClass('selected');
+		
+		var value = $(this).attr('data-value');
+		alert(value);
+	});
+ 	
+});	
 </script>
 </html>
