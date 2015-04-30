@@ -159,7 +159,12 @@ public class JSPController extends HttpServlet {
 			}
 			getServletContext().getRequestDispatcher("/home.jsp").forward(request, response);
 			
-		}else if("bookAppointment".equals(pageName)){
+		}else if("about".equals(pageName)){
+			getServletContext().getRequestDispatcher("/about.jsp").forward(request, response);
+		}else if("contact".equals(pageName)){
+			getServletContext().getRequestDispatcher("/contact.jsp").forward(request, response);
+		}
+		else if("bookAppointment".equals(pageName)){
 			//TODO make respective heading for doctor and patient e.g. doctors portal
 			HttpSession session = request.getSession();
 			String login = (String) session.getAttribute("login");

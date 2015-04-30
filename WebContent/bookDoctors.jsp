@@ -10,7 +10,7 @@
 		response.sendRedirect(redirectURL);
 	}
 %>
-<%@ include file="header.jsp" %>
+<%@ include file="headerp.jsp" %>
 <body>
 	<div id="headerContainer" width="100%"
 		style="background-color: #3b5998; height: 70px;">

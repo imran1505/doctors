@@ -12,12 +12,12 @@
 <body >
 <div id="headerContainer" >
 <div id="headerFont" >
-<div style="font-size: 36px; font-weight: bold; color: #fff; display: inline">Doctors Portal</div>
+<div style="font-size: 36px; font-weight: bold; color: #fff; display: inline">Patients Portal</div>
 </div>
 </div>
 <div id="signUpContainer" >
 <div style="padding: 8px 10px;">
-<span style="color: #000;font-weight: bold;"><strong>New to Doctors Portal? </strong>Sign Up! Its free.</span></div>
+<span style="color: #000;font-weight: bold;"><strong>New to Patients Portal? </strong>Sign Up! Its free.</span></div>
 <!-- <form name="signUpForm" id="signUpForm" action="Controller?action=signup" method="post"> -->
 <div style="padding: 10px 10px 0 10px;" >
 <input type="text" name="fname"  id="fname"  class="textBoxHalf" placeholder="First Name">
