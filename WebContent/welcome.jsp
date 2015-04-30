@@ -105,7 +105,7 @@ td,th {
 	</div>
 	<div class="halfright">
 	<label class="symptom-text" for="tags">You are Online</label><br>
-	<iframe style="height:500px;background: white;" src="http://localhost:9090/?name=${doctorName}&id=${uid}"></iframe>
+	<iframe style="height:500px;background: white;" src="http://128.199.78.67:9090/?name=${doctorName}&id=${uid}"></iframe>
 	</div>
 	 </div>
 	</section>

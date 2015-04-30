@@ -42,7 +42,7 @@
 	<c:if test="${not empty cuid}">
 	    <div style="text-align: center" class="ui-widget">
 		<div class="iframe" style="display:hidden;">
-    			<iframe name="ifrm" id="ifrm" src="http://localhost:9090/?name=${name}&id=${cuid}" frameborder="0">
+    			<iframe name="ifrm" id="ifrm" src="http://128.199.78.67:9090/?name=${name}&id=${cuid}" frameborder="0">
         				Your browser doesn't support chats.
     			</iframe>
 		</div>
