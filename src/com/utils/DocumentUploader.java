@@ -26,8 +26,8 @@ public class DocumentUploader {
 
 	
 	 private static boolean isMultipart;
-//	 private static String filePath="E:/docs/";
-	 private static String filePath="/users/imran/testdocs/";
+     private static String filePath="E:/docs/";
+	// private static String filePath="/users/imran/testdocs/";
 	 private static int maxFileSize = 500000 * 1024;
 	 private static int maxMemSize = 400 * 1024;
 	 private static File file ;
