@@ -158,7 +158,6 @@ $(function() {
  		); 
  	
  	function getSlots(){
-		event.preventDefault();
 		console.log("getting slots");
 		var date = $( "#datepicker" ).datepicker( "getDate" ),
 		day  = date.getDate(),  
