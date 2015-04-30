@@ -76,7 +76,7 @@ public class Disease {
 		//influenza
 
 		ArrayList<String> influenzaList = new ArrayList<>();
-		influenzaList.add("body aches");
+		influenzaList.add("bodyache");
 		influenzaList.add("fever");
 		influenzaList.add("headache");
 		influenzaList.add("sore throat");
@@ -123,7 +123,7 @@ public class Disease {
 		ArrayList<String> anemiaList = new ArrayList<>();
 		anemiaList.add("weakness");
 		anemiaList.add("fatigue");
-		anemiaList.add("Appear pale");
+		anemiaList.add("appear pale");
 		anemiaList.add("rapid heart rate");
 		anemiaList.add("shortness of breath");
 		diseaseMap.put("Anemia",anemiaList);
@@ -133,7 +133,7 @@ public class Disease {
 
 		ArrayList<String> anxietyList = new ArrayList<>();
 		anxietyList.add("sweating");
-		anxietyList.add("irritability");
+		anxietyList.add("irritation");
 		anxietyList.add("stress");
 		anxietyList.add("rapid heart rate");
 		diseaseMap.put("Anxiety",anxietyList);
@@ -254,7 +254,7 @@ public class Disease {
 		sinusitisList.add("facial swelling");
 		sinusitisList.add("facial pain");
 		sinusitisList.add("earache");
-		sinusitisList.add("cough");
+		sinusitisList.add("coughing");
 		sinusitisList.add("bad breath");
 		diseaseMap.put("Sinusitis",sinusitisList); 
 		diseaseDepartmentMap.put("Sinusitis",Department.PULMONARY);
@@ -282,11 +282,11 @@ public class Disease {
 		pneumoniaList.add("purplish skin");
 		pneumoniaList.add("chest pain");
 		pneumoniaList.add("chills");
-		pneumoniaList.add("cough");
+		pneumoniaList.add("coughing");
 		pneumoniaList.add("fatigue");
 		pneumoniaList.add("fever");
 		pneumoniaList.add("headache");
-		pneumoniaList.add("muscle aches");
+		pneumoniaList.add("bodyache");
 		pneumoniaList.add("nasal congestion");
 		pneumoniaList.add("weakness");
 		pneumoniaList.add("sore throat");  
@@ -348,10 +348,10 @@ public class Disease {
 		multipleSclerosisList.add("loss of bladder control");
 		multipleSclerosisList.add("mania");
 		multipleSclerosisList.add("mood changes");
-		multipleSclerosisList.add("muscle pain");
+		multipleSclerosisList.add("bodyache");
 		multipleSclerosisList.add("muscle spasms");
 		multipleSclerosisList.add("numbness");
-		multipleSclerosisList.add("vision changes");
+		
 		multipleSclerosisList.add("tingling");
 		diseaseMap.put("Multiple Sclerosis", multipleSclerosisList);
 		diseaseDepartmentMap.put("Multiple Sclerosis",Department.PHYSICIAN);
@@ -409,7 +409,7 @@ public class Disease {
 		lymeDiseaseList.add("headache");
 		lymeDiseaseList.add("joint pain");
 		lymeDiseaseList.add("memory problems");
-		lymeDiseaseList.add("muscle pains");
+		lymeDiseaseList.add("bodyache");
 		lymeDiseaseList.add("numbness");
 		lymeDiseaseList.add("rash");
 		lymeDiseaseList.add("palpitations");
@@ -432,7 +432,7 @@ public class Disease {
 		systemicLupusErythematosusList.add("joint pains");
 		systemicLupusErythematosusList.add("loss of appetite");
 		systemicLupusErythematosusList.add("mouth ulcers");
-		systemicLupusErythematosusList.add("muscle pains");
+		systemicLupusErythematosusList.add("bodyache");
 		systemicLupusErythematosusList.add("numbness");
 		systemicLupusErythematosusList.add("photosensitivity");
 		systemicLupusErythematosusList.add("psychosis");
@@ -447,13 +447,13 @@ public class Disease {
 		//Cervical Cancer
 
 		ArrayList<String> CervicalList = new ArrayList<>(); 
-		CervicalList.add("Abnormal Vaginal Bleeding");
-		CervicalList.add("Bleeding After Sexual Intercourse");
-		CervicalList.add("Bleeding Between Periods");
-		CervicalList.add("Heavy Menstrual Periods");
-		CervicalList.add("Painful Intercourse");
-		CervicalList.add("Pelvic Pain");
-		CervicalList.add("Vaginal Discharge");
+		CervicalList.add("abnormal vaginal bleeding");
+		CervicalList.add("bleeding after sexual intercourse");
+		CervicalList.add("bleeding between periods");
+		CervicalList.add("heavy menstrual periods");
+		CervicalList.add("painful intercourse");
+		CervicalList.add("pelvic pain");
+		CervicalList.add("vaginal discharge");
 		diseaseMap.put("Cervical Cancer", CervicalList) ;
 		diseaseDepartmentMap.put("Cervical Cancer",Department.ONCOLOGY);
 
@@ -461,30 +461,30 @@ public class Disease {
 		//Common Cold
 
 		ArrayList<String> CommoncoldList = new ArrayList<>(); 
-		CommoncoldList.add("cough");
-		CommoncoldList.add("stuffy or runny nose");
-		CommoncoldList.add("scratchy or sore throat");
+		CommoncoldList.add("coughing");
+		CommoncoldList.add("runny nose");
+		CommoncoldList.add("sore throat");
 		CommoncoldList.add("sneezing");
 		diseaseMap.put("Common Cold", CommoncoldList) ;
 		diseaseDepartmentMap.put("Common Cold",Department.PHYSICIAN);
 
 
-		//colon cncer
+		//colon cancer
 
 		ArrayList<String> ColoncancerList = new ArrayList<>(); 
-		ColoncancerList.add("Abdominal Cramping");
-		ColoncancerList.add("Abdominal Mass");
-		ColoncancerList.add("Abdominal Pain");
-		ColoncancerList.add("Abdominal Tenderness");
-		ColoncancerList.add("Bloating");
-		ColoncancerList.add("Blood in Stool");
-		ColoncancerList.add("Constipation");
-		ColoncancerList.add("Dark Stool");
-		ColoncancerList.add("Diarrhea");
-		ColoncancerList.add("Fatigue");
-		ColoncancerList.add("Shortness of Breath");
-		ColoncancerList.add("Weakness");
-		ColoncancerList.add("Weight Loss");
+		ColoncancerList.add("abdominal cramping");
+		ColoncancerList.add("abdominal mass");
+		ColoncancerList.add("abdominal pain");
+		ColoncancerList.add("abdominal tenderness");
+		ColoncancerList.add("bloating");
+		ColoncancerList.add("blood in stool");
+		ColoncancerList.add("constipation");
+		ColoncancerList.add("dark stool");
+		ColoncancerList.add("diarrhea");
+		ColoncancerList.add("fatigue");
+		ColoncancerList.add("shortness of breath");
+		ColoncancerList.add("weakness");
+		ColoncancerList.add("weight loss");
 		diseaseMap.put("Colon Cancer", ColoncancerList) ;
 		diseaseDepartmentMap.put("Colon Cancer",Department.ONCOLOGY);
 
@@ -496,51 +496,51 @@ public class Disease {
 		depressionList.add("helplessness");
 		depressionList.add("guilt");
 		depressionList.add("lack of interest in daily activities");
-		depressionList.add("irritability");
+		depressionList.add("irritation");
 		depressionList.add("loss of energy");
 		depressionList.add("loss of appetite");
 		depressionList.add("sleep problems");
 		depressionList.add("self-loathing");
 		depressionList.add("thoughts of suicide");
 		diseaseMap.put("Depression", depressionList) ;
-		diseaseDepartmentMap.put("depression",Department.PHYSICIAN);
+		diseaseDepartmentMap.put("Depression",Department.PHYSICIAN);
 
 
 		//diabetes
 
 		ArrayList<String> diabetesList = new ArrayList<>(); 
-		diabetesList.add("Blurred Vision");
-		diabetesList.add("Dehydration");
-		diabetesList.add("Dry Mouth");
-		diabetesList.add("Fatigue");
-		diabetesList.add("Frequent Urination");
-		diabetesList.add("Hunger");
-		diabetesList.add("Increased Susceptibility to Infection");
-		diabetesList.add("Increased Thirst");
-		diabetesList.add("Itching Skin");
-		diabetesList.add("Nausea");
-		diabetesList.add("Slow-Healing Sores");
-		diabetesList.add("Vaginal Infections");
-		diabetesList.add("Vomiting");
-		diabetesList.add("Weight Gain");
-		diabetesList.add("Weight Loss");
-		diabetesList.add("Yeast Infections");
-		diseaseMap.put("diabetes", diabetesList) ;
-		diseaseDepartmentMap.put("diabetes",Department.PHYSICIAN);
+		diabetesList.add("blurred Vision");
+		diabetesList.add("dehydration");
+		diabetesList.add("dry Mouth");
+		diabetesList.add("fatigue");
+		diabetesList.add("frequent Urination");
+		diabetesList.add("hunger");
+		diabetesList.add("increased Susceptibility to Infection");
+		diabetesList.add("increased Thirst");
+		diabetesList.add("itching Skin");
+		diabetesList.add("nausea");
+		diabetesList.add("slow-Healing Sores");
+		diabetesList.add("vaginal Infections");
+		diabetesList.add("vomiting");
+		diabetesList.add("weight Gain");
+		diabetesList.add("weight Loss");
+		diabetesList.add("yeast Infections");
+		diseaseMap.put("Diabetes", diabetesList) ;
+		diseaseDepartmentMap.put("Diabetes",Department.PHYSICIAN);
 
 		//early pregnancy
 
 		ArrayList<String> earlypregnancyList = new ArrayList<>(); 
 		earlypregnancyList.add("absence of menstruation and weight gain");
-		earlypregnancyList.add("mood swings");
+		earlypregnancyList.add("mood swing");
 		earlypregnancyList.add("increased urination");
-		earlypregnancyList.add("headaches");
+		earlypregnancyList.add("headache");
 		earlypregnancyList.add("low backache");
 		earlypregnancyList.add("breast tenderness");
 		earlypregnancyList.add("darkened areolas");
 		earlypregnancyList.add("fatigue");
 		earlypregnancyList.add("nausea");
-		earlypregnancyList.add("Nausea");
+		
 		earlypregnancyList.add("implantation bleeding");
 		diseaseMap.put("Early Pregnency", earlypregnancyList) ;
 		diseaseDepartmentMap.put("Early Pregnency",Department.GYNAECOLOGY);
@@ -548,7 +548,7 @@ public class Disease {
 		//heart attack
 
 		ArrayList<String> heartattackList = new ArrayList<>(); 
-		heartattackList.add("sweat");
+		heartattackList.add("sweating");
 		heartattackList.add("chest pain");
 		diseaseMap.put("Heart Attack", heartattackList) ;
 		diseaseDepartmentMap.put("Heart Attack",Department.CARDIOLOGY);
@@ -556,34 +556,34 @@ public class Disease {
 		//high blood pressure(hypertension)
 
 		ArrayList<String> hypertensionList = new ArrayList<>(); 
-		hypertensionList.add("Blood in the Urine");
-		hypertensionList.add("Blurred Vision");
-		hypertensionList.add("Chest Pain");
-		hypertensionList.add("Decreased Urine Output");
-		hypertensionList.add("Dizziness");
-		hypertensionList.add("Headache");
-		hypertensionList.add("Leg Swelling");
-		hypertensionList.add("Nosebleeds");
-		hypertensionList.add("Shortness of Breath");
+		hypertensionList.add("blood in the urine");
+		hypertensionList.add("blurred vision");
+		hypertensionList.add("chest pain");
+		hypertensionList.add("decreased urine output");
+		hypertensionList.add("dizziness");
+		hypertensionList.add("headache");
+		hypertensionList.add("leg swelling");
+		hypertensionList.add("nosebleeds");
+		hypertensionList.add("shortness of breath");
 		diseaseMap.put("Hyper Tension", hypertensionList) ;
 		diseaseDepartmentMap.put("Hyper Tension",Department.PHYSICIAN);
 
 		//HIV Infection
 
 		ArrayList<String> HIVList = new ArrayList<>(); 
-		HIVList.add("Diarrhea");
-		HIVList.add("Fatigue");
-		HIVList.add("Fever");
-		HIVList.add("Fungal Infection of the Mouth and Esophagus");
-		HIVList.add("Fungal Nails");
-		HIVList.add("Leukoplakia of the Tongue");
-		HIVList.add("Malignancies");
-		HIVList.add("Mouth Sores");
-		HIVList.add("Sore Throat");
-		HIVList.add("Swollen Lymph Nodes");
-		HIVList.add("Vaginal Candidiasis");
-		HIVList.add("Vomiting");
-		HIVList.add("Weight Loss");
+		HIVList.add("diarrhea");
+		HIVList.add("fatigue");
+		HIVList.add("fever");
+		
+		HIVList.add("fungal nails");
+		HIVList.add("leukoplakia of the tongue");
+		HIVList.add("malignancies");
+		HIVList.add("mouth sores");
+		HIVList.add("sore throat");
+		HIVList.add("swollen lymph nodes");
+		HIVList.add("vaginal candidiasis");
+		HIVList.add("vomiting");
+		HIVList.add("weight loss");
 		diseaseMap.put("HIV", HIVList) ;
 		diseaseDepartmentMap.put("HIV",Department.PHYSICIAN);
 
@@ -591,73 +591,73 @@ public class Disease {
 		//Hyperthermia
 
 		ArrayList<String> HyperthermiaList = new ArrayList<>(); 
-		HyperthermiaList.add("Coma");
-		HyperthermiaList.add("Confusion");
-		HyperthermiaList.add("Dizziness");
-		HyperthermiaList.add("Elevated Heart Rate");
-		HyperthermiaList.add("Fainting");
-		HyperthermiaList.add("Fever");
-		HyperthermiaList.add("Headache");
-		HyperthermiaList.add("Muscle Cramps");
-		HyperthermiaList.add("Nausea");
-		HyperthermiaList.add("Sweat");
-		HyperthermiaList.add("Rash");
-		HyperthermiaList.add("Reddened Skin");
-		HyperthermiaList.add("Vomiting");
-		HyperthermiaList.add("Weakness");
+		HyperthermiaList.add("coma");
+		HyperthermiaList.add("confusion");
+		HyperthermiaList.add("dizziness");
+		HyperthermiaList.add("elevated heart rate");
+		HyperthermiaList.add("fainting");
+		HyperthermiaList.add("fever");
+		HyperthermiaList.add("headache");
+		HyperthermiaList.add("muscle cramps");
+		HyperthermiaList.add("nausea");
+		HyperthermiaList.add("sweating");
+		HyperthermiaList.add("rash");
+		HyperthermiaList.add("reddened skin");
+		HyperthermiaList.add("vomiting");
+		HyperthermiaList.add("weakness");
 		diseaseMap.put("Hyperthermia", HyperthermiaList) ;
 		diseaseDepartmentMap.put("Hyperthermia",Department.PHYSICIAN);
 
 		//Irritable Bowel Syndrome (IBS)
 
 		ArrayList<String> IBSList = new ArrayList<>(); 
-		IBSList.add("Abdominal Distension");
-		IBSList.add("Abdominal Pain");
-		IBSList.add("Bloating");
-		IBSList.add("Change in Stool Consistency");
-		IBSList.add("Constipation");
-		IBSList.add("Diarrhea");
-		IBSList.add("Flatulence");
-		IBSList.add("Mucus in Stool");
-		IBSList.add("Watery Stool");
+		IBSList.add("abdominal distension");
+		IBSList.add("abdominal pain");
+		IBSList.add("bloating");
+		IBSList.add("change in stool consistency");
+		IBSList.add("constipation");
+		IBSList.add("diarrhea");
+		IBSList.add("flatulence");
+		IBSList.add("mucus in stool");
+		IBSList.add("watery Stool");
 		diseaseMap.put("Irritable Bowel Syndrome (IBS)", IBSList) ;
 		diseaseDepartmentMap.put("Irritable Bowel Syndrome (IBS)",Department.PHYSICIAN);
 
 		//Kidney Stone
 
 		ArrayList<String> KidneyStoneList = new ArrayList<>(); 
-		KidneyStoneList.add("Blood in Urine");
-		KidneyStoneList.add("Abdominal Pain");
-		KidneyStoneList.add("Flank Pain");
-		KidneyStoneList.add("Low Back Pain");
-		KidneyStoneList.add("Nausea");
-		KidneyStoneList.add("Scrotal Pain");
-		KidneyStoneList.add("Sweat");
-		KidneyStoneList.add("Vomiting");
-		KidneyStoneList.add("Testicular Pain");
+		KidneyStoneList.add("blood in urine");
+		KidneyStoneList.add("abdominal pain");
+		KidneyStoneList.add("flank pain");
+		KidneyStoneList.add("low back pain");
+		KidneyStoneList.add("nausea");
+		KidneyStoneList.add("scrotal pain");
+		KidneyStoneList.add("sweating");
+		KidneyStoneList.add("vomiting");
+		KidneyStoneList.add("testicular pain");
 		diseaseMap.put("Kidney Stone", KidneyStoneList) ;
 		diseaseDepartmentMap.put("Kidney Stone",Department.NEPHROLOGY);
 
 		//Leukemia
 
 		ArrayList<String> LeukemiaList = new ArrayList<>(); 
-		LeukemiaList.add("Bleeding Gums");
-		LeukemiaList.add("Bone Pain");
-		LeukemiaList.add("Loss of Muscle Control");
-		LeukemiaList.add("Easy Bruising");
-		LeukemiaList.add("Nausea");
-		LeukemiaList.add("Fever");
-		LeukemiaList.add("Sweat");
-		LeukemiaList.add("Vomiting");
-		LeukemiaList.add("Headache");
-		LeukemiaList.add("Enlarged Liver");
-		LeukemiaList.add("Enlarged Spleen");
-		LeukemiaList.add("Fatigue");
-		LeukemiaList.add("Joint Pain");
-		LeukemiaList.add("Night Sweats");
-		LeukemiaList.add("Seizures");
-		LeukemiaList.add("Swollen Lymph Nodes");
-		LeukemiaList.add("Weight Loss");
+		LeukemiaList.add("bleeding gums");
+		LeukemiaList.add("bone pain");
+		LeukemiaList.add("loss of muscle control");
+		LeukemiaList.add("easy bruising");
+		LeukemiaList.add("nausea");
+		LeukemiaList.add("fever");
+		LeukemiaList.add("sweating");
+		LeukemiaList.add("vomiting");
+		LeukemiaList.add("headache");
+		LeukemiaList.add("enlarged liver");
+		LeukemiaList.add("enlarged spleen");
+		LeukemiaList.add("fatigue");
+		LeukemiaList.add("joint pain");
+		LeukemiaList.add("night sweats");
+		LeukemiaList.add("seizures");
+		LeukemiaList.add("swollen lymph nodes");
+		LeukemiaList.add("weight loss");
 		diseaseMap.put("Leukemia", LeukemiaList) ;
 		diseaseDepartmentMap.put("Leukemia",Department.ONCOLOGY);
 
@@ -667,7 +667,7 @@ public class Disease {
 		ArrayList<String> lungCancerList = new ArrayList<>();
 		lungCancerList.add("blood in sputus");
 		lungCancerList.add("chest pain");
-		lungCancerList.add("cough"); 
+		lungCancerList.add("coughing"); 
 		lungCancerList.add("depression"); 
 		lungCancerList.add("fatigue"); 
 		lungCancerList.add("headache");
