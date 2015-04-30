@@ -368,7 +368,7 @@ $(function() {
 				}
 					console.log("symptoms response:" + res);
 				});
-				},3000
+				},60000
 			);
 	</c:if>
 /* 	function loadIframe(iframeName, url) {

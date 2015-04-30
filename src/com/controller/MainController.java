@@ -521,7 +521,7 @@ public class MainController extends HttpServlet {
 			return 6;
 		}
 		
-		return 0;
+		return 10;
 	}
 	
 	

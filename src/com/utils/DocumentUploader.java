@@ -26,8 +26,8 @@ public class DocumentUploader {
 
 	
 	 private static boolean isMultipart;
-//	 private static String filePath="E:/docs/";
-	 private static String filePath="/users/imran/testdocs/";
+     private static String filePath="E:/docs/";
+	// private static String filePath="/users/imran/testdocs/";
 	 private static int maxFileSize = 500000 * 1024;
 	 private static int maxMemSize = 400 * 1024;
 	 private static File file ;
@@ -111,7 +111,7 @@ public class DocumentUploader {
 		// maximum size that will be stored in memory
 		factory.setSizeThreshold(maxMemSize);
 		// Location to save data that is larger than maxMemSize.
-		factory.setRepository(new File("\\users\\imran\\testdocs"));
+		factory.setRepository(new File("E:/docs/"));
 
 		// Create a new file upload handler
 		ServletFileUpload upload = new ServletFileUpload(factory);
